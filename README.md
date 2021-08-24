@@ -10,3 +10,7 @@ If you are on a linux enviroment, you can take advantage of the shell script and
 ```
 . scripts/install_dev_server.sh
 ```
+
+### Environement Variables
+
+- `DJANGO_SECRET_KEY`
