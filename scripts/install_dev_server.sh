@@ -4,11 +4,11 @@ cd server/
 
 if [ -d venv ]
 then
-    printf "virtual env (venv) already present"
+    printf "\nvirtual env (venv) already present\n"
     printf "\nactivating ./venv\n"
     . venv/bin/activate
 else
-    printf "virtual not present \ncreating ./venv"
+    printf "\nvirtual not present \ncreating ./venv\n"
     python3 -m venv venv
     printf "\nactivating ./venv\n"
     source venv/bin/activate
