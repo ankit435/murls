@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "./server/venv/bin/python",
+    // "python.pythonPath": "server/Scripts/python.exe" // for windows
+}
