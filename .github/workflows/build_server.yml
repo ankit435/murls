@@ -27,7 +27,7 @@ jobs:
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 5s --health-timeout 3s --health-retries 4
+        options: --health-cmd pg_isready --health-interval 3s --health-timeout 2s --health-retries 7
 
     steps:
       - name: Checkout
