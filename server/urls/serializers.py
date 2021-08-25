@@ -12,7 +12,8 @@ def slug_validation_error():
 
 
 class UrlSerializer(ModelSerializer):
-    slug = serializer_CharField(allow_blank=True,required=False)
+    slug = serializer_CharField(allow_blank=True, required=False)
+
     class Meta:
         model = Url
         fields = (
@@ -23,9 +24,9 @@ class UrlSerializer(ModelSerializer):
             "boosted",
             "slug",
             "created_at",
-            "updated_at"
+            "updated_at",
         )
-        read_only_fields = ("id","created_at", "updated_at")
+        read_only_fields = ("id", "created_at", "updated_at")
 
     def validate_slug(self, value: str):
         if " " in value:
