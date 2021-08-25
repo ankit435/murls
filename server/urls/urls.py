@@ -1,5 +1,5 @@
 from django.urls import path
 
-from urls.views import URLView
+from urls.views import UrlView
 
-urlpatterns = [path("urls", URLView.as_view(), name="URLs")]
+urlpatterns = [path("urls", UrlView.as_view(), name="URLs")]

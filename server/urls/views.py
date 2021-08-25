@@ -1,7 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView
 
+from urls.serializers import UrlSerializer
+from urls.models import Url
 
-class URLView(APIView):
-    def get(self, _request):
-        return Response(data={"health": "working"})
+class UrlView(ListCreateAPIView):
+    queryset = Url.objects.all()
+    serializer_class = UrlSerializer
+
