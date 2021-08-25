@@ -27,7 +27,7 @@ jobs:
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 3s --health-retries 4
 
     steps:
       - name: Checkout
@@ -50,7 +50,9 @@ jobs:
         run: python manage.py migrate
         env:
           IS_DEV: 'FALSE'
+          DJANGO_SECRET_KEY: ${{github.sha}}
           DB_NAME: ${{env.POSTGRES_DB}}
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
           DB_PORT: ${{env.POSTGRES_PORT}}
+          
