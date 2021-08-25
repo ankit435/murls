@@ -4,12 +4,18 @@ from urllib.parse import urlparse
 from urls.models import Url
 
 
-def url_validation_error():
-    raise ValidationError("Invalid URL was provided for location")
+def slug_validation_error():
+    raise ValidationError("The Slug provided was invalid")
 
 
 class UrlSerializer(ModelSerializer):
     class Meta:
         model = Url
-        fields = ("name", "description", "location", "boosted")
+        fields = ("name", "description", "location", "boosted", "slug")
         read_only_fields = ("created_at", "updated_at")
+
+    def validate_slug(self, value: str):
+        if " " in value:
+            slug_validation_error()
+        # later add the setting from admin
+        return value
