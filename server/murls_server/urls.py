@@ -26,4 +26,4 @@ urlpatterns = [
     path("_/", include("urls.urls")),
 ]
 
-handler404 = 'utils.views.Page_Not_Found'
+handler404 = "utils.views.Page_Not_Found"
