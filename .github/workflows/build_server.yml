@@ -1,8 +1,13 @@
 name: Python application
 
 on:
-  - push
-  - pull_request
+  push:
+      paths:
+        - "server/**"
+    
+  pull_request:
+    paths:
+      - "server/**"
 
 defaults:
   run:
@@ -20,7 +25,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12-alpine # 14 is still in beta
+        image: postgres:12 # 14 is still in beta
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
