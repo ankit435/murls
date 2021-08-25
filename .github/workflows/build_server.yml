@@ -56,3 +56,13 @@ jobs:
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
           DB_PORT: ${{env.POSTGRES_PORT}}
           
+      - name: Check server ready for production
+        run: |
+          python manage.py check --deploy
+        env:
+          IS_DEV: 'FALSE'
+          DJANGO_SECRET_KEY: ${{github.sha}}
+          DB_NAME: ${{env.POSTGRES_DB}}
+          DB_USER: ${{env.POSTGRES_USER}}
+          DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+          DB_PORT: ${{env.POSTGRES_PORT}}
