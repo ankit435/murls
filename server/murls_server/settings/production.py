@@ -8,10 +8,13 @@ ALLOWED_HOSTS = []
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
-# todo: refactor this to postgres
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": getenv("DB_NAME"),
+        "USER": getenv("DB_USER"),
+        "PASSWORD": getenv("DB_PASSWORD"),
+        "HOST": getenv("DB_HOST", "127.0.0.1"),
+        "PORT": getenv("DB_PORT"),
     }
 }
