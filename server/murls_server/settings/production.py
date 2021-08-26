@@ -4,7 +4,7 @@ from .base import BASE_DIR
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
