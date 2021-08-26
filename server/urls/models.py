@@ -8,7 +8,7 @@ class Url(models.Model):
     slug = models.CharField(blank=False, unique=True, max_length=100)
     description = models.TextField(blank=True)
     location = models.URLField(max_length=256)
-    clicks = models.IntegerField(default=0,db_index=True)
+    clicks = models.IntegerField(default=0, db_index=True)
     boosted = models.BooleanField(verbose_name="is_boosted", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

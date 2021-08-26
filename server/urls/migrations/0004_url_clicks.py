@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('urls', '0003_alter_url_slug'),
+        ("urls", "0003_alter_url_slug"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='url',
-            name='clicks',
+            model_name="url",
+            name="clicks",
             field=models.IntegerField(db_index=True, default=0),
         ),
     ]

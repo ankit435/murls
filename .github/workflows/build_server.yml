@@ -1,0 +1,86 @@
+name: Build Server
+
+on:
+  push:
+    paths:
+      - "server/**"
+
+  pull_request:
+
+defaults:
+  run:
+    working-directory: server
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: github_actions
+      POSTGRES_PORT: 5432
+
+    services:
+      postgres:
+        image: postgres:12 # 14 is still in beta
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 3s --health-timeout 2s --health-retries 7
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Restore pip cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.pip-cache.outputs.dir }}
+            ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pip-${{ hashFiles('server/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pipenv
+
+      - name: Install packages
+        run: |
+          pipenv install --ignore-pipfile --system
+
+      - name: Run migrations
+        run: python manage.py migrate
+        env:
+          IS_DEV: "FALSE"
+          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.author}}
+          DB_NAME: ${{env.POSTGRES_DB}}
+          DB_USER: ${{env.POSTGRES_USER}}
+          DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+          DB_PORT: ${{env.POSTGRES_PORT}}
+
+      - name: Check server ready for production
+        run: |
+          python manage.py check --deploy
+        env:
+          IS_DEV: "FALSE"
+          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.author}}
+          DB_NAME: ${{env.POSTGRES_DB}}
+          DB_USER: ${{env.POSTGRES_USER}}
+          DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+          DB_PORT: ${{env.POSTGRES_PORT}}
