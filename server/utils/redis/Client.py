@@ -24,3 +24,6 @@ class Redis:
         self, key: str, value: Union[int, str], expiry_secs: int = 60 * 60
     ):
         self.r.setex(key, expiry_secs, value)
+
+    def remove_key(self,key:str):
+        self.r.delete(key)

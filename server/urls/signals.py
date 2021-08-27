@@ -14,3 +14,6 @@ def boost_url(sender, instance, created, **kwargs):
 
     elif instance.boosted:
         redis.set(instance.slug, instance.location)
+
+    else: # remove boost if updated
+        redis.remove_key(instance.slug)
