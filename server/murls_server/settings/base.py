@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # my apps
     "urls",
+    "redirector",
 ]
 
 MIDDLEWARE = [

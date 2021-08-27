@@ -21,5 +21,3 @@ else
     pipenv install --dev
     dotenv set IS_DEV TRUE
 fi
-
-cd ../

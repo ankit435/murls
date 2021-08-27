@@ -20,6 +20,8 @@ jobs:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: github_actions
       POSTGRES_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
     services:
       postgres:
@@ -30,7 +32,19 @@ jobs:
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 3s --health-timeout 2s --health-retries 7
+        options: >-
+          --health-cmd pg_isready 
+          --health-interval 3s 
+          --health-timeout 2s 
+          --health-retries 7
+
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 3s
+          --health-timeout 2s
+          --health-retries 7
 
     steps:
       - name: Checkout
@@ -73,6 +87,8 @@ jobs:
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
           DB_PORT: ${{env.POSTGRES_PORT}}
+          REDIS_HOST: ${{env.REDIS_HOST}}
+          REDIS_PORT: ${{env.REDIS_PORT}}
 
       - name: Check server ready for production
         run: |
@@ -84,3 +100,5 @@ jobs:
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
           DB_PORT: ${{env.POSTGRES_PORT}}
+          REDIS_HOST: ${{env.REDIS_HOST}}
+          REDIS_PORT: ${{env.REDIS_PORT}}

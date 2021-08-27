@@ -24,6 +24,7 @@ urlpatterns = [
         admin.site.urls,
     ),
     path("_/", include("urls.urls")),
+    path("", include("redirector.urls")),
 ]
 
 handler404 = Page_Not_Found
