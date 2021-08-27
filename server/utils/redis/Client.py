@@ -2,10 +2,6 @@ import redis
 from os import getenv, environ
 from typing import Union
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 
 class Redis:
     r: redis.Redis()
@@ -23,3 +19,6 @@ class Redis:
 
     def set(self, key: str, value: Union[int, str]):
         self.r.set(key, value)
+
+    def set_with_expiry(self, key: str, value: Union[int, str], expiry_secs: int = 60):
+        self.r.setex(key, expiry_secs, value)
