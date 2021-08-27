@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 from urls.models import Url
@@ -17,3 +17,8 @@ def boost_url(sender, instance, created, **kwargs):
 
     else: # remove boost if updated
         redis.remove_key(instance.slug)
+
+
+@receiver(post_delete,sender=Url)
+def unboost_url(sender,instance,**kwargs):
+    redis.remove_key(instance.slug)
