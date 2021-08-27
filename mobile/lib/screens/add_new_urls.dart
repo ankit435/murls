@@ -31,10 +31,12 @@ class _addUrlsState extends State<addUrls> {
   var _create_urls = Murls(
     Alias: '',
     murlsUrl: '',
-    datetime: '',
+    Expirydatetime: '',
     click: 0,
     Id: '',
     boost: false,
+    Createddatetime: '',
+    UserURl: '',
   );
   var _initValues = {
     'Alias': '',
@@ -72,13 +74,13 @@ class _addUrlsState extends State<addUrls> {
 
         _initValues = {
           'Alias': _create_urls.Alias,
-          'datetime': _create_urls.datetime,
+          'datetime': _create_urls.Expirydatetime,
           'click': _create_urls.click.toString(),
           'boost': _create_urls.boost.toString(),
           'murlsUrl': '',
         };
         status = _create_urls.boost;
-        selectdate = _create_urls.datetime.toString();
+        selectdate = _create_urls.Expirydatetime.toString();
         pickdate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(selectdate);
 
         _UrlController.text = _create_urls.murlsUrl;
@@ -195,10 +197,12 @@ class _addUrlsState extends State<addUrls> {
                                 _create_urls = Murls(
                                   Alias: value!.toLowerCase().toString(),
                                   murlsUrl: _create_urls.murlsUrl,
-                                  datetime: _create_urls.datetime,
+                                  Expirydatetime: _create_urls.Expirydatetime,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
                                   boost: _create_urls.boost,
+                                  Createddatetime: _create_urls.Createddatetime,
+                                  UserURl: _create_urls.UserURl,
                                 );
                               },
                             ),
@@ -226,10 +230,12 @@ class _addUrlsState extends State<addUrls> {
                                 _create_urls = Murls(
                                   Alias: _create_urls.Alias,
                                   murlsUrl: value.toString(),
-                                  datetime: _create_urls.datetime,
+                                  Expirydatetime: _create_urls.Expirydatetime,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
                                   boost: _create_urls.boost,
+                                  Createddatetime: _create_urls.Createddatetime,
+                                  UserURl: _create_urls.UserURl,
                                 );
                               },
                             ),
@@ -295,10 +301,12 @@ class _addUrlsState extends State<addUrls> {
                                 _create_urls = Murls(
                                   Alias: _create_urls.Alias,
                                   murlsUrl: _create_urls.murlsUrl,
-                                  datetime: selectdate,
+                                  Expirydatetime: selectdate,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
                                   boost: status,
+                                  Createddatetime: _create_urls.Createddatetime,
+                                  UserURl: _create_urls.UserURl,
                                 );
 
                                 _saveForm();

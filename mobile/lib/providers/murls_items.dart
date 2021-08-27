@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:murls/widgets/user_urls_item.dart';
 import './murls_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -36,7 +37,7 @@ class murls_detail with ChangeNotifier {
         body: json.encode({
           'name': murls.Alias,
           'location': murls.murlsUrl,
-          'description': murls.datetime,
+          'description': murls.Expirydatetime,
           // 'slug': murls.click,
           'boosted': murls.boost,
         }),
@@ -49,7 +50,9 @@ class murls_detail with ChangeNotifier {
         final newURls = Murls(
           Alias: murls.Alias,
           murlsUrl: murls.murlsUrl,
-          datetime: murls.datetime,
+          UserURl: murls.UserURl,
+          Createddatetime: murls.Createddatetime,
+          Expirydatetime: murls.Expirydatetime,
           click: murls.click,
           boost: murls.boost,
           Id: json.decode(response.body)['id'].toString(),
@@ -87,9 +90,11 @@ class murls_detail with ChangeNotifier {
           Id: urlsData['id'].toString(),
           Alias: urlsData['name'],
           murlsUrl: urlsData['location'],
-          datetime: urlsData['description'],
+          Expirydatetime: urlsData['description'],
           boost: urlsData['boosted'],
           click: urlsData['clicks'],
+          Createddatetime: urlsData['created_at'],
+          UserURl: urlsData['slug'],
         ));
       }
 
@@ -109,7 +114,7 @@ class murls_detail with ChangeNotifier {
         body: json.encode({
           'name': newURLS.Alias,
           'location': newURLS.murlsUrl,
-          'description': newURLS.datetime,
+          'description': newURLS.Expirydatetime,
           // 'slug': murls.click,
           'boosted': newURLS.boost,
         }),

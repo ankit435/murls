@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:murls/providers/murls_items.dart';
-import 'package:murls/screens/listed_url_screen.dart';
+
 import 'package:provider/provider.dart';
 
 import '../widgets/graph.dart';
@@ -44,6 +45,11 @@ class _url_detailState extends State<url_detail> {
       listen: false,
     ).findById(urlid);
 
+    DateTime expirydate =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(loadedUrl.Expirydatetime);
+    DateTime createddate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+        .parse(loadedUrl.Createddatetime);
+
     return Scaffold(
       key: key,
       appBar: AppBar(
@@ -72,11 +78,7 @@ class _url_detailState extends State<url_detail> {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.edit),
-                        //onPressed: () => _startAddNewUrl(context),
                         onPressed: () {
-                          // Navigator.of(context).pushNamed(addUrls.routeName,
-                          //     arguments: loadedUrl.Id);
-
                           _startAddNewUrl(context, loadedUrl.Id);
                         },
                         color: Theme.of(context).primaryColor,
@@ -114,7 +116,9 @@ class _url_detailState extends State<url_detail> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                loadedUrl.datetime != '' ? 'Date == ${loadedUrl.datetime}' : '',
+                loadedUrl.Expirydatetime != ''
+                    ? 'expiry_Date == ${DateFormat.yMd().format(expirydate)}'
+                    : '',
                 //loadedUrl.datetime != '' ? 'Date == ${DateFormat.yMd().format(loadedUrl.datetime)}',
                 textAlign: TextAlign.center,
                 softWrap: true,
@@ -125,6 +129,24 @@ class _url_detailState extends State<url_detail> {
               width: double.infinity,
               child: Text(
                 'Boost == ${loadedUrl.boost}',
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              child: Text(
+                'create at == ${DateFormat.yMd().format(createddate)}',
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              child: Text(
+                'user url == ${loadedUrl.UserURl}',
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
