@@ -16,6 +16,7 @@ class Murls with ChangeNotifier {
     required this.Id,
     nulldateTime,
     dateTime,
+    murlsurl,
   });
   void toggleBoostStatus() {
     boost = !boost;

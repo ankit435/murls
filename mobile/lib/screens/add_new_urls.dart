@@ -1,15 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
 import '../providers/murls_item.dart';
 import '../providers/murls_items.dart';
 import 'package:murls/utilities/styles.dart';
-import 'package:uuid/uuid.dart';
 
 class addUrls extends StatefulWidget {
-  const addUrls({Key? key}) : super(key: key);
+  // const addUrls({Key? key}) : super(key: key);
   static const routeName = '/add-urls';
+  final String? urlid;
+  const addUrls({Key? key, this.urlid}) : super(key: key);
 
   @override
   _addUrlsState createState() => _addUrlsState();
@@ -18,22 +21,30 @@ class addUrls extends StatefulWidget {
 class _addUrlsState extends State<addUrls> {
   final _form = GlobalKey<FormState>();
   final _URLSFocusNode = FocusNode();
+
+  final _UrlController = TextEditingController();
   String selectdate = '';
   bool status = false;
   DateTime pickdate = DateTime.now();
+  Color _favIconColor = Colors.grey;
 
   var _create_urls = Murls(
     Alias: '',
     murlsUrl: '',
     datetime: '',
     click: 0,
-    Id: Uuid().v4(),
+    Id: '',
     boost: false,
   );
-  // void dispose() {
-  //   _URLSFocusNode.dispose();
-  // }
-
+  var _initValues = {
+    'Alias': '',
+    'murlsUrl': '',
+    'datetime': '',
+    'click': '',
+    'boost': '',
+  };
+  var _isInit = true;
+  var _isLoading = false;
   void presentdatepicker() {
     showDatePicker(
       context: context,
@@ -45,187 +56,271 @@ class _addUrlsState extends State<addUrls> {
         return;
       }
       setState(() {
-        selectdate = pickedDate.toString();
+        selectdate = pickedDate.toIso8601String();
         pickdate = pickedDate;
       });
     });
   }
 
-  void _saveForm() {
+  void didChangeDependencies() {
+    if (_isInit) {
+      final urlid = widget.urlid == null ? '' : widget.urlid;
+
+      if (urlid != '') {
+        _create_urls =
+            Provider.of<murls_detail>(context, listen: false).findById(urlid!);
+
+        _initValues = {
+          'Alias': _create_urls.Alias,
+          'datetime': _create_urls.datetime,
+          'click': _create_urls.click.toString(),
+          'boost': _create_urls.boost.toString(),
+          'murlsUrl': '',
+        };
+        status = _create_urls.boost;
+        selectdate = _create_urls.datetime.toString();
+        pickdate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(selectdate);
+
+        _UrlController.text = _create_urls.murlsUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  void dispose() {
+    _URLSFocusNode.dispose();
+    super.dispose();
+  }
+
+  Future<void> _saveForm() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
-
     _form.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+    if (_create_urls.Id != '') {
+      try {
+        await Provider.of<murls_detail>(context, listen: false)
+            .updateUrls(_create_urls.Id, _create_urls);
+      } catch (error) {
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong.'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('okay'),
+              )
+            ],
+          ),
+        );
+      }
+    } else {
+      try {
+        await Provider.of<murls_detail>(context, listen: false)
+            .addUrls(_create_urls);
+      } catch (error) {
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong.'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('okay'),
+              )
+            ],
+          ),
+        );
+      }
+    }
 
-    Provider.of<murls_detail>(context, listen: false).addUrls(_create_urls);
-
+    setState(() {
+      _isLoading = false;
+    });
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Form(
-              key: _form,
+    return Scaffold(
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      autofocus: true,
-                      //decoration: InputDecoration(hintText: 'Alias'),
-                      decoration: kalaisdecor,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_URLSFocusNode);
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please provide a value.';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _create_urls = Murls(
-                          Alias: value.toString(),
-                          murlsUrl: _create_urls.murlsUrl,
-                          datetime: _create_urls.datetime,
-                          click: _create_urls.click,
-                          Id: _create_urls.Id,
-                          boost: _create_urls.boost,
-                        );
-                      },
-                    ),
-                    TextFormField(
-                      // decoration: InputDecoration(hintText: 'URlS'),
-                      decoration: kurlsdecor,
-                      onFieldSubmitted: (_) {},
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please provide a value.';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _create_urls = Murls(
-                          Alias: _create_urls.Alias,
-                          murlsUrl: value.toString(),
-                          datetime: _create_urls.datetime,
-                          click: _create_urls.click,
-                          Id: _create_urls.Id,
-                          boost: _create_urls.boost,
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Form(
+                      key: _form,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: Column(
                           children: <Widget>[
-                            FlutterSwitch(
-                              width: 100.0,
-                              height: 55.0,
-                              valueFontSize: 25.0,
-                              toggleSize: 45.0,
-                              value: status,
-                              borderRadius: 30.0,
-                              padding: 8.0,
-                              activeColor: Colors.brown,
-                              showOnOff: true,
-                              onToggle: (value) {
-                                setState(() {
-                                  status = value;
-                                });
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                              initialValue: _initValues['Alias'],
+                              decoration: kalaisdecor,
+                              textInputAction: TextInputAction.next,
+                              //controller: _UrlController,
+                              onFieldSubmitted: (_) {
+                                FocusScope.of(context)
+                                    .requestFocus(_URLSFocusNode);
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please provide a value.';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
                                 _create_urls = Murls(
-                                  Alias: _create_urls.Alias,
+                                  Alias: value!.toLowerCase().toString(),
                                   murlsUrl: _create_urls.murlsUrl,
                                   datetime: _create_urls.datetime,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
-                                  boost: status,
+                                  boost: _create_urls.boost,
                                 );
                               },
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Card(
-                                color: Colors.brown,
-                                child: ElevatedButton(
-                                  //textColor: Theme.of(context).primaryColor,
-                                  style: kelevated,
-                                  onPressed: () => presentdatepicker(),
-                                  child: Text(
-                                    selectdate == ''
-                                        ? 'Expiry Date'
-                                        : '${DateFormat.yMd().format(pickdate)}',
-                                    // : '${DateFormat("yyyy-MM-dd hh:mm:ss").parse(selectdate)}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                            SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              // initialValue: _initValues['murlsUrl'],
+                              decoration: kurlsdecor,
+                              focusNode: _URLSFocusNode,
+                              controller: _UrlController,
+                              keyboardType: TextInputType.url,
+                              onFieldSubmitted: (_) {},
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter urls URL.';
+                                }
+                                if (!value.startsWith(RegExp('http')) &&
+                                    !value.startsWith(RegExp('https'))) {
+                                  return 'Please enter a valid URL.';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _create_urls = Murls(
+                                  Alias: _create_urls.Alias,
+                                  murlsUrl: value.toString(),
+                                  datetime: _create_urls.datetime,
+                                  click: _create_urls.click,
+                                  Id: _create_urls.Id,
+                                  boost: _create_urls.boost,
+                                );
+                              },
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 35,
+                                      width: 145,
+                                      child: OutlineButton(
+                                        child: Text(
+                                          status ? 'BOOSTED' : 'BOOST',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 23,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          setState(
+                                            () {
+                                              if (status == false) {
+                                                //  _favIconColor = Colors.brown;
+                                                status = true;
+                                              } else {
+                                                // _favIconColor = Colors.grey;
+                                                status = false;
+                                              }
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: OutlinedButton(
+                                        onPressed: () => presentdatepicker(),
+                                        child: Text(
+                                          selectdate == ''
+                                              ? 'Expiry Date'
+                                              : '${DateFormat.yMd().format(pickdate)}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                            ElevatedButton(
+                              child: Text(
+                                'Create Urls',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
                               ),
-                            ),
-                          ]),
-                    ),
-                    Card(
-                      color: Colors.brown,
-                      child: ElevatedButton(
-                        //style: style,
-                        style: kelevated,
-                        child: Text(
-                          'Create Urls',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        onPressed: () {
-                          _create_urls = Murls(
-                            Alias: _create_urls.Alias,
-                            murlsUrl: _create_urls.murlsUrl,
-                            datetime: selectdate,
-                            click: _create_urls.click,
-                            Id: _create_urls.Id,
-                            boost: status,
-                          );
+                              onPressed: () {
+                                _create_urls = Murls(
+                                  Alias: _create_urls.Alias,
+                                  murlsUrl: _create_urls.murlsUrl,
+                                  datetime: selectdate,
+                                  click: _create_urls.click,
+                                  Id: _create_urls.Id,
+                                  boost: status,
+                                );
 
-                          _saveForm();
-                        },
+                                _saveForm();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom:
+                              MediaQuery.of(context).viewInsets.bottom + 10),
+                    ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
-
-              //   ),
             ),
-
-////////////////////////////////////////////////////
-
-            SizedBox(
-              height: 8.0,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 10),
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -1,20 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:murls/providers/murls_items.dart';
+import 'package:murls/screens/listed_url_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:murls/utilities/styles.dart';
-import '../widgets/graph.dart';
 
-class url_detail extends StatelessWidget {
+import '../widgets/graph.dart';
+import 'add_new_urls.dart';
+
+class url_detail extends StatefulWidget {
   const url_detail({Key? key}) : super(key: key);
 
   static const routeName = '/urls-Detail';
+
+  @override
+  _url_detailState createState() => _url_detailState();
+}
+
+class _url_detailState extends State<url_detail> {
+  void _startAddNewUrl(BuildContext context, String Id) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+      isScrollControlled: false,
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {},
+          child: addUrls(urlid: Id),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+  //
+
   @override
   Widget build(BuildContext context) {
     final key = new GlobalKey<ScaffoldState>();
-    final islansacpe =
-        MediaQuery.of(context).orientation == Orientation.landscape;
     final urlid = ModalRoute.of(context)!.settings.arguments as String;
+
     final loadedUrl = Provider.of<murls_detail>(
       context,
       listen: false,
@@ -23,7 +47,8 @@ class url_detail extends StatelessWidget {
     return Scaffold(
       key: key,
       appBar: AppBar(
-        title: Text(loadedUrl.Alias),
+        title: Text(
+            '${loadedUrl.Alias[0].toUpperCase()}${loadedUrl.Alias.substring(1)}'),
       ),
       body: Container(
         height: double.infinity,
@@ -31,20 +56,33 @@ class url_detail extends StatelessWidget {
         // decoration: kcontainerboxdecor,
         child: Column(
           children: <Widget>[
-            if (!islansacpe)
-              Container(
-                color: const Color(0xff81e5cd),
-                height: 300,
-                width: double.infinity,
-                child: BarChartSample1(),
-              ),
+            Container(
+              color: const Color(0xff81e5cd),
+              height: 300,
+              width: double.infinity,
+              child: BarChartSample1(),
+            ),
             SizedBox(height: 10),
             GestureDetector(
-              child: Text(
-                'URL == ${loadedUrl.murlsUrl}',
-                style: TextStyle(
-                  color: Color(0xff81e5cd),
-                  fontSize: 20,
+              child: ListTile(
+                title: Text(' ${loadedUrl.murlsUrl}'),
+                trailing: Container(
+                  width: 100,
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        //onPressed: () => _startAddNewUrl(context),
+                        onPressed: () {
+                          // Navigator.of(context).pushNamed(addUrls.routeName,
+                          //     arguments: loadedUrl.Id);
+
+                          _startAddNewUrl(context, loadedUrl.Id);
+                        },
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               onLongPress: () {
@@ -53,20 +91,12 @@ class url_detail extends StatelessWidget {
                 );
                 key.currentState!.showSnackBar(
                   new SnackBar(
-                    content: new Text("Copied to Clipboard"),
+                    content: new Text(
+                      "Copied urls",
+                    ),
                   ),
                 );
               },
-            ),
-            // Text(
-            //   'URL == ${loadedUrl.murlsUrl}',
-            //   style: TextStyle(
-            //     color: Colors.grey,
-            //     fontSize: 20,
-            //   ),
-            // ),
-            SizedBox(
-              height: 10,
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -98,7 +128,7 @@ class url_detail extends StatelessWidget {
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
-            )
+            ),
           ],
         ),
       ),

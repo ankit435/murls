@@ -7,16 +7,59 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import './add_new_urls.dart';
 
-import 'package:murls/utilities/styles.dart';
-
 import 'profile.dart';
 
-class listed_url extends StatelessWidget {
+class listed_url extends StatefulWidget {
   //const listed_url({Key? key}) : super(key: key);
   static const routeName = '/listed-urls';
 
+  @override
+  _listed_urlState createState() => _listed_urlState();
+}
+
+class _listed_urlState extends State<listed_url> {
+  var _isInit = true;
+  var _isLoading = false;
+
+  void initState() {
+    super.initState();
+  }
+
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<murls_detail>(context).fetchAndSetUrls().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   Auth0User? profile = AuthService.instance.profile;
+
   bool picture = false;
+
+  void _startAddNewUrl(BuildContext context) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+      isScrollControlled: false,
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {},
+          child: addUrls(),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final urlsdata = Provider.of<murls_detail>(context);
@@ -34,68 +77,58 @@ class listed_url extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: urlsdata.items.isEmpty
-            ? LayoutBuilder(
-                builder: (ctx, constraints) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'No url is found  ?',
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        height: constraints.maxHeight * .6,
-                        child: Image.asset(
-                          'assets/images/waiting.png',
-                          fit: BoxFit.cover,
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: urlsdata.items.isEmpty
+                  ? LayoutBuilder(
+                      builder: (ctx, constraints) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'No url is found  ?',
+                              style: Theme.of(context).textTheme.headline3,
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Container(
+                              height: constraints.maxHeight * .6,
+                              child: Image.asset(
+                                'assets/images/waiting.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  : Padding(
+                      padding: EdgeInsets.all(6),
+                      child: ListView.builder(
+                        itemCount: urlsdata.items.length,
+                        itemBuilder: (_, i) => Column(
+                          children: [
+                            userUrl(
+                              urlsdata.items[i].Alias,
+                              urlsdata.items[i].Id,
+                            ),
+                            // Text('${urlsdata.items[i].boost}'),
+
+                            Divider(),
+                          ],
                         ),
                       ),
-                    ],
-                  );
-                },
-              )
-            : Padding(
-                padding: EdgeInsets.all(6),
-                child: ListView.builder(
-                  itemCount: urlsdata.items.length,
-                  itemBuilder: (_, i) => Column(
-                    children: [
-                      userUrl(
-                        urlsdata.items[i].Alias,
-                        urlsdata.items[i].Id,
-                      ),
-                      // Text('${urlsdata.items[i].boost}'),
-
-                      Divider(),
-                    ],
-                  ),
-                ),
-              ),
-      ),
+                    ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showModalBottomSheet(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-          // backgroundColor: Colors.amber,
-          isScrollControlled: false,
-          // backgroundColor: Colors.black,
-          context: context,
-          builder: (context) {
-            return GestureDetector(
-              onTap: () {},
-              child: addUrls(),
-              behavior: HitTestBehavior.opaque,
-            );
-          },
-        ),
+        onPressed: () => _startAddNewUrl(context),
         child: Icon(Icons.add),
       ),
     );
@@ -134,11 +167,3 @@ class listed_url extends StatelessWidget {
           );
   }
 }
-
-
-
-
-
-  
-
-//Navigator.of(context).pushNamed(addUrls.routeName);

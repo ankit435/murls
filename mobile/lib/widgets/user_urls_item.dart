@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:murls/providers/murls_items.dart';
 import 'package:murls/screens/url_detail_screen.dart';
-import 'package:murls/utilities/styles.dart';
 import 'package:provider/provider.dart';
 
 class userUrl extends StatelessWidget {
@@ -63,7 +62,6 @@ class userUrl extends StatelessWidget {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              print('hi');
               Navigator.of(context)
                   .pushNamed(url_detail.routeName, arguments: id);
             },
@@ -77,11 +75,10 @@ class userUrl extends StatelessWidget {
                   ),
                   child: ListTile(
                     title: Text(
-                      '${allias}',
-                      style: TextStyle(
-                          color: Colors.purple,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold),
+                      '${allias[0].toUpperCase()}${allias.substring(1)}',
+                      style: Theme.of(context).textTheme.headline4,
+
+                      // ${s[0].toUpperCase()}${s.substring(1)}'
                     ),
                   ),
                 ),

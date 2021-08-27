@@ -100,9 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> loginAction() async {
     setLoadingState();
     final message = await AuthService.instance.login();
-    print(message);
+
     if (message == 'Success') {
-      print('hi');
       setSuccessAuthState();
     } else {
       setState(() {
