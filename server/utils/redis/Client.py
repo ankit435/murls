@@ -14,11 +14,13 @@ class Redis:
         )
         self.r = new_redis_client
 
-    def get(self, key: str):
-        self.r.get(key)
+    def get(self, key: str) -> Union[str, None]:
+        return self.r.get(key)
 
     def set(self, key: str, value: Union[int, str]):
         self.r.set(key, value)
 
-    def set_with_expiry(self, key: str, value: Union[int, str], expiry_secs: int = 60):
+    def set_with_expiry(
+        self, key: str, value: Union[int, str], expiry_secs: int = 60 * 60
+    ):
         self.r.setex(key, expiry_secs, value)
