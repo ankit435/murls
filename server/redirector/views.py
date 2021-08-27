@@ -14,6 +14,7 @@ class Redirector(APIView):
     def get(self, request: HttpRequest, slug: str) -> QuerySet[Url]:
 
         cached_location = redis.get(slug)
+
         if cached_location is not None:
             return HttpResponseRedirect(cached_location)
 
