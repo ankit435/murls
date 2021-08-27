@@ -35,18 +35,10 @@ final kboxdecoration = BoxDecoration(
   ),
 );
 final kalaisdecor = InputDecoration(
-  hintText: 'Alais',
-  hintStyle: TextStyle(color: Colors.grey),
+  hintText: 'Alias',
   filled: true,
-  fillColor: Colors.white70,
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    borderSide: BorderSide(color: Colors.red, width: 2),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    borderSide: BorderSide(color: Colors.red),
-  ),
+  hoverColor: Colors.blue.shade100,
+  border: OutlineInputBorder(),
 );
 
 final ktext =
@@ -67,17 +59,9 @@ final kcontainerboxdecor = BoxDecoration(
 
 final kurlsdecor = InputDecoration(
   hintText: 'Urls',
-  hintStyle: TextStyle(color: Colors.grey),
   filled: true,
-  fillColor: Colors.white70,
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    borderSide: BorderSide(color: Colors.red, width: 2),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    borderSide: BorderSide(color: Colors.red),
-  ),
+  hoverColor: Colors.blue.shade100,
+  border: OutlineInputBorder(),
 );
 
 final kelevated = ElevatedButton.styleFrom(

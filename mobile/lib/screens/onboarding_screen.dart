@@ -36,7 +36,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   _storeOnboardInfo() async {
-    print("Shared pref called");
     int isViewed = 0;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('onBoard', isViewed);
@@ -128,8 +127,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Connect people around\n       \t\t the world',
+                                'Connect people around the world',
                                 style: kTitleStyle,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             SizedBox(height: heights * .02),
@@ -161,8 +161,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Live your life with smarter\n     \t\t   URLS!',
+                                'Live your life with smarter URLS!',
                                 style: kTitleStyle,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             SizedBox(height: heights * .02),
@@ -194,8 +195,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Get a new experience\n      of imagination',
+                                'Get a new experience of imagination',
                                 style: kTitleStyle,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             SizedBox(height: heights * .02),

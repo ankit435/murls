@@ -80,7 +80,6 @@ class AuthService {
         ),
       ),
     );
-    print(json);
 
     return Auth0IdToken.fromJson(json);
   }
@@ -96,7 +95,6 @@ class AuthService {
       headers: {'Authorization': 'Bearer $accessToken'},
     );
 
-    print(response.body);
     if (response.statusCode == 200) {
       return Auth0User.fromJson(jsonDecode(response.body));
     } else {
@@ -107,10 +105,10 @@ class AuthService {
   Future<String> _setLocalVariables(result) async {
     final bool isValidResult =
         result != null && result.accessToken != null && result.idToken != null;
-    // print(result.idToken);
+
     if (isValidResult) {
       auth0AccessToken = result.accessToken;
-      // idToken = parseIdToken(result.idToken);
+
       profile = await getUserDetails(result.accessToken);
 
       if (result.refreshToken != null) {
@@ -118,7 +116,6 @@ class AuthService {
           key: REFRESH_TOKEN_KEY,
           value: result.refreshToken,
         );
-        print("hell");
       }
       return 'Success';
     } else {
@@ -127,7 +124,6 @@ class AuthService {
   }
 
   Future<void> logout() async {
-    print("logout");
     await secureStorage.delete(key: REFRESH_TOKEN_KEY);
   }
 }

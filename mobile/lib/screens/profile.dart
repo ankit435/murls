@@ -15,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Auth0User? profile = AuthService.instance.profile;
+
   @override
   Widget build(BuildContext context) {
     return Column(
