@@ -9,6 +9,7 @@ ALLOWED_HOST = get_base_url_host()
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", ALLOWED_HOST]
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
+print('the secret key was --> ',SECRET_KEY)
 
 DATABASES = {
     "default": {
