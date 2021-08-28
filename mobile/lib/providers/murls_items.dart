@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:murls/widgets/user_urls_item.dart';
+
 import './murls_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:murls/Auth/models/auth0_user.dart';
-import 'package:murls/Auth/services/auth_service.dart';
+//import 'package:murls/Auth/models/auth0_user.dart';
+//import 'package:murls/Auth/services/auth_service.dart';
 
+// ignore: camel_case_types
 class murls_detail with ChangeNotifier {
   List<Murls> _items = [
     Murls(
@@ -29,7 +30,7 @@ class murls_detail with ChangeNotifier {
   }
 
   Future<void> addUrls(Murls murls) async {
-    Auth0User? profile = AuthService.instance.profile;
+    //Auth0User? profile = AuthService.instance.profile;
     // final url =
     //     'https://murls-4a35c-default-rtdb.firebaseio.com/murls/${profile?.id}.json';
     const url = 'http://52.226.16.59/_/urls';
@@ -73,7 +74,7 @@ class murls_detail with ChangeNotifier {
   }
 
   Future<void> fetchAndSetUrls() async {
-    Auth0User? profile = AuthService.instance.profile;
+    //Auth0User? profile = AuthService.instance.profile;
     // final url =
     //     'https://murls-4a35c-default-rtdb.firebaseio.com/murls/${profile?.id}.json';
     const url = 'http://52.226.16.59/_/urls';
@@ -109,10 +110,13 @@ class murls_detail with ChangeNotifier {
     }
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> updateUrls(String Id, Murls newURLS) async {
+    // ignore: non_constant_identifier_names
     final UrlIndex = _items.indexWhere((Url) => Url.Id == Id);
     final url = 'http://52.226.16.59/_/urls/$Id';
     if (UrlIndex >= 0) {
+      // ignore: non_constant_identifier_names
       final Response = await http.patch(
         Uri.parse(url),
         body: json.encode({
@@ -138,7 +142,6 @@ class murls_detail with ChangeNotifier {
   }
 
   Future<void> removeItem(String urlId) async {
-    Auth0User? profile = AuthService.instance.profile;
     final url = 'http://52.226.16.59/_/urls/$urlId';
     final existingurlindex = _items.indexWhere((url) => url.Id == urlId);
     Murls? existingurl = _items[existingurlindex];

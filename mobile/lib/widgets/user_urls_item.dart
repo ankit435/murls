@@ -3,6 +3,7 @@ import 'package:murls/providers/murls_items.dart';
 import 'package:murls/screens/url_detail_screen.dart';
 import 'package:provider/provider.dart';
 
+// ignore: camel_case_types
 class userUrl extends StatelessWidget {
   final String allias;
   final String id;
@@ -40,13 +41,13 @@ class userUrl extends StatelessWidget {
               'Do you want to remove the this url?',
             ),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 child: Text('No'),
                 onPressed: () {
                   Navigator.of(ctx).pop(false);
                 },
               ),
-              FlatButton(
+              ElevatedButton(
                 child: Text('Yes'),
                 onPressed: () {
                   Navigator.of(ctx).pop(true);

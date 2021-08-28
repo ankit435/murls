@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import './add_new_urls.dart';
 
+// ignore: camel_case_types
 class listed_url extends StatefulWidget {
   static const routeName = '/listed-urls';
 
@@ -14,6 +15,7 @@ class listed_url extends StatefulWidget {
   _listed_urlState createState() => _listed_urlState();
 }
 
+// ignore: camel_case_types
 class _listed_urlState extends State<listed_url> {
   var _isInit = true;
   var _isLoading = false;

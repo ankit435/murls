@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../widgets/graph.dart';
 import 'add_new_urls.dart';
 
+// ignore: camel_case_types
 class url_detail extends StatefulWidget {
   const url_detail({Key? key}) : super(key: key);
 
@@ -17,7 +18,9 @@ class url_detail extends StatefulWidget {
   _url_detailState createState() => _url_detailState();
 }
 
+// ignore: camel_case_types
 class _url_detailState extends State<url_detail> {
+  // ignore: non_constant_identifier_names
   void _startAddNewUrl(BuildContext context, String Id) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -93,7 +96,7 @@ class _url_detailState extends State<url_detail> {
                     Clipboard.setData(
                       new ClipboardData(text: 'https://${loadedUrl.UserURl}'),
                     );
-                    key.currentState!.showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                       new SnackBar(
                         content: new Text(
                           "Copied urls",

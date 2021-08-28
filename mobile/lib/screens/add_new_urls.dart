@@ -8,6 +8,7 @@ import '../providers/murls_item.dart';
 import '../providers/murls_items.dart';
 import 'package:murls/utilities/styles.dart';
 
+// ignore: camel_case_types
 class addUrls extends StatefulWidget {
   // const addUrls({Key? key}) : super(key: key);
   static const routeName = '/add-urls';
@@ -18,16 +19,19 @@ class addUrls extends StatefulWidget {
   _addUrlsState createState() => _addUrlsState();
 }
 
+// ignore: camel_case_types
 class _addUrlsState extends State<addUrls> {
   final _form = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   final _URLSFocusNode = FocusNode();
 
+  // ignore: non_constant_identifier_names
   final _UrlController = TextEditingController();
   String selectdate = '';
   bool status = false;
   DateTime? pickdate = DateTime.now();
-  Color _favIconColor = Colors.grey;
 
+  // ignore: non_constant_identifier_names
   var _create_urls = Murls(
     Alias: '',
     murlsUrl: '',
@@ -118,7 +122,7 @@ class _addUrlsState extends State<addUrls> {
             title: Text('An error occurred!'),
             content: Text('Something went wrong.'),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -139,7 +143,7 @@ class _addUrlsState extends State<addUrls> {
             title: Text('An error occurred!'),
             content: Text('Something went wrong.'),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -254,7 +258,7 @@ class _addUrlsState extends State<addUrls> {
                                     SizedBox(
                                       height: 35,
                                       width: 145,
-                                      child: OutlineButton(
+                                      child: OutlinedButton(
                                         child: Text(
                                           status ? 'BOOSTED' : 'BOOST',
                                           style: TextStyle(
