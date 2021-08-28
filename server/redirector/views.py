@@ -1,6 +1,6 @@
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
-from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -14,11 +14,12 @@ class Redirector(APIView):
     def get(self, request: HttpRequest, slug: str) -> QuerySet[Url]:
 
         cached_location = redis.get(slug)
+
         if cached_location is not None:
-            return HttpResponseRedirect(cached_location)
+            return HttpResponsePermanentRedirect(cached_location)
 
         try:
             found_url = Url.objects.values("location").get(slug=slug)
-            return HttpResponseRedirect(found_url.get("location"))
+            return HttpResponsePermanentRedirect(found_url.get("location"))
         except:
-            return HttpResponseRedirect("/")
+            return HttpResponsePermanentRedirect("/")
