@@ -82,7 +82,7 @@ jobs:
       - name: Run migrations
         run: python manage.py migrate
         env:
-          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.actor}}
+          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.head_ref}}
           DB_NAME: ${{env.POSTGRES_DB}}
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
@@ -95,7 +95,7 @@ jobs:
         run: |
           python manage.py check --deploy
         env:
-          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.author}}
+          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.head_ref}}
           DB_NAME: ${{env.POSTGRES_DB}}
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
