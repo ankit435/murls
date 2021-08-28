@@ -1,4 +1,5 @@
 from os import getenv
+from urllib.parse import urlparse
 
 
 def get_full_base_url():
@@ -11,6 +12,6 @@ def get_full_base_url():
     return base_url
 
 
-def get_base_url_host() -> str:
-    full_base_url = get_full_base_url()
-    return full_base_url.replace("http://", "").replace("https://", "")
+def get_base_url_host():
+    parsed_url = urlparse(get_full_base_url())
+    return parsed_url.netloc
