@@ -24,16 +24,34 @@ class _listed_urlState extends State<listed_url> {
     super.initState();
   }
 
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<murls_detail>(context).fetchAndSetUrls().then((_) {
-        setState(() {
-          _isLoading = false;
+      try {
+        await Provider.of<murls_detail>(context).fetchAndSetUrls().then((_) {
+          setState(() {
+            _isLoading = false;
+          });
         });
-      });
+      } catch (error) {
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Check internet connection !.'),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('okay'),
+              )
+            ],
+          ),
+        );
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -57,6 +75,10 @@ class _listed_urlState extends State<listed_url> {
         );
       },
     );
+  }
+
+  Future<void> _refreshUrls(BuildContext context) async {
+    await Provider.of<murls_detail>(context, listen: false).fetchAndSetUrls();
   }
 
   @override
@@ -105,7 +127,20 @@ class _listed_urlState extends State<listed_url> {
                         );
                       },
                     )
-                  : Padding(
+                  :
+                  // FutureBuilder(
+                  //     future: _refreshUrls(context),
+                  //     builder: (ctx, snapshot) =>
+                  //         snapshot.connectionState == ConnectionState.waiting
+                  //             ? Center(
+                  //                 child: CircularProgressIndicator(),
+                  //               )
+                  //             : RefreshIndicator(
+                  //                 onRefresh: () => _refreshUrls(context),
+                  //                 child: Consumer<murls_detail>(
+                  //                   builder: (ctx, urlsdata, _) =>
+
+                  Padding(
                       padding: EdgeInsets.all(6),
                       child: ListView.builder(
                         itemCount: urlsdata.items.length,
@@ -122,6 +157,9 @@ class _listed_urlState extends State<listed_url> {
                           ],
                         ),
                       ),
+                      //                 ),
+                      //               ),
+                      //             ),
                     ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

@@ -11,14 +11,14 @@ import 'dart:convert';
 // ignore: camel_case_types
 class murls_detail with ChangeNotifier {
   List<Murls> _items = [
-    Murls(
-        Alias: 'ankit',
-        murlsUrl: 'ebewe',
-        Expirydatetime: DateTime.now().toIso8601String(),
-        click: 0,
-        Id: 2.toString(),
-        Createddatetime: DateTime.now().toIso8601String(),
-        UserURl: 'xhzbxjbsjhiosh')
+    // Murls(
+    //     Alias: 'ankit',
+    //     murlsUrl: 'ebewe',
+    //     Expirydatetime: DateTime.now().toIso8601String(),
+    //     click: 0,
+    //     Id: 2.toString(),
+    //     Createddatetime: DateTime.now().toIso8601String(),
+    //     UserURl: 'xhzbxjbsjhiosh')
   ];
 
   List<Murls> get items {
@@ -123,14 +123,14 @@ class murls_detail with ChangeNotifier {
           'name': newURLS.Alias,
           'location': newURLS.murlsUrl,
           'description': newURLS.Expirydatetime,
-          // 'slug': murls.click,
           'boosted': newURLS.boost,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
-      if (Response.statusCode == 200) {
+      print(Response);
+      if ((Response.statusCode >= 400)) {
         _items[UrlIndex] = newURLS;
         notifyListeners();
       } else {
