@@ -79,12 +79,7 @@ class userUrl extends StatelessWidget {
                       '${allias[0].toUpperCase()}${allias.substring(1)}',
                       style: Theme.of(context).textTheme.headline4,
                     ),
-                    trailing: boost
-                        ? IconButton(
-                            icon: Icon(Icons.blur_circular),
-                            onPressed: () {},
-                          )
-                        : null,
+                    trailing: boost ? Icon(Icons.bolt) : null,
                   ),
                 ),
               ),

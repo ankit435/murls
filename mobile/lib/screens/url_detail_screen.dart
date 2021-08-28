@@ -143,12 +143,29 @@ class _url_detailState extends State<url_detail> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                Expanded(child: ListTile(title: Text('Total Click'))),
+                Expanded(
+                  child: ListTile(
+                    title: Text('${loadedUrl.click}'),
+                  ),
+                )
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
                 Expanded(child: ListTile(title: Text('BOOST'))),
                 Expanded(
-                    child: ListTile(
-                        title: Text(loadedUrl.boost
-                            ? 'your url is boosted'
-                            : 'your url not is boosted')))
+                  child: ListTile(
+                    title: Text(loadedUrl.boost
+                        ? 'your url is boosted'
+                        : 'your url not is boosted'),
+                    trailing: loadedUrl.boost
+                        ? Icon(Icons.bolt)
+                        : Icon(Icons.cable_rounded),
+                  ),
+                )
               ],
             ),
           ],

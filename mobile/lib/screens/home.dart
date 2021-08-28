@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:murls/Auth/services/auth_service.dart';
-import 'profile.dart';
 
 import 'listed_url_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             FittedBox(
               child: SvgPicture.asset(
-                "assets/images/svg_entire_logo(1).svg",
+                "assets/images/logo.svg",
                 height: 150,
                 width: 150,
                 // cacheHeight: 150,
@@ -87,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
       name = AuthService.instance.idToken?.name;
       Navigator.of(context).pushReplacementNamed(listed_url.routeName);
     });
-    ProfileScreen();
   }
 
   setLoadingState() {

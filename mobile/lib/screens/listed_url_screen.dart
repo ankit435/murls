@@ -7,10 +7,7 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import './add_new_urls.dart';
 
-import 'profile.dart';
-
 class listed_url extends StatefulWidget {
-  //const listed_url({Key? key}) : super(key: key);
   static const routeName = '/listed-urls';
 
   @override
@@ -69,9 +66,7 @@ class _listed_urlState extends State<listed_url> {
         title: Text('All URLS'),
         actions: <Widget>[
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(ProfileScreen.routeName);
-            },
+            onTap: () {},
             child: _avatar(profile),
           ),
         ],

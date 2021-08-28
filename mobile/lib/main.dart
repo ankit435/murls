@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:murls/screens/home.dart';
-import 'package:murls/screens/profile.dart';
 
 import 'package:murls/widgets/graph.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,7 +54,6 @@ class _MyAppState extends State<MyApp> {
           addUrls.routeName: (ctx) => addUrls(),
           url_detail.routeName: (ctx) => url_detail(),
           BarChartSample1.routeName: (ctx) => BarChartSample1(),
-          ProfileScreen.routeName: (ctx) => ProfileScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
         },
       ),
