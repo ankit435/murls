@@ -7,6 +7,7 @@ class Url(models.Model):
     name = models.CharField(blank=True, max_length=50)
     slug = models.CharField(blank=False, unique=True, max_length=100)
     description = models.TextField(blank=True)
+    shortened_url = models.URLField(max_length=2000)
     location = models.URLField(max_length=6000)
     clicks = models.IntegerField(default=0, db_index=True)
     boosted = models.BooleanField(verbose_name="is_boosted", default=False)

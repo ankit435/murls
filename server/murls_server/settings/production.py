@@ -1,11 +1,12 @@
 from os import getenv
 
+from utils.base_url import get_base_url_host
 from .base import BASE_DIR
 
 DEBUG = False
 
-allowed_host = getenv("ALLOWED_HOST")
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", allowed_host]
+ALLOWED_HOST = get_base_url_host()
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", ALLOWED_HOST]
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
