@@ -3,7 +3,6 @@ from django.db import migrations, models
 from utils.base_url import get_full_base_url
 
 
-
 def fill_shortened_field(apps, schema_editor):
     """
     fill shortened field with base`base_url + slug`

@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     # my apps
     "urls",
     "redirector",
-    "members"
+    "members",
 ]
 
 MIDDLEWARE = [
