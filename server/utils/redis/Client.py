@@ -25,5 +25,5 @@ class Redis:
     ):
         self.r.setex(key, expiry_secs, value)
 
-    def remove_key(self,key:str):
+    def remove_key(self, key: str):
         self.r.delete(key)

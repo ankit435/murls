@@ -15,10 +15,10 @@ def boost_url(sender, instance, created, **kwargs):
     elif instance.boosted:
         redis.set(instance.slug, instance.location)
 
-    else: # remove boost if updated
+    else:  # remove boost if updated
         redis.remove_key(instance.slug)
 
 
-@receiver(post_delete,sender=Url)
-def unboost_url(sender,instance,**kwargs):
+@receiver(post_delete, sender=Url)
+def unboost_url(sender, instance, **kwargs):
     redis.remove_key(instance.slug)
