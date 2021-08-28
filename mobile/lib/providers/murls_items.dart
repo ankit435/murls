@@ -53,14 +53,15 @@ class murls_detail with ChangeNotifier {
         final newURls = Murls(
           Alias: murls.Alias,
           murlsUrl: murls.murlsUrl,
-          UserURl: murls.UserURl,
-          Createddatetime: murls.Createddatetime,
+          UserURl: json.decode(response.body)['slug'].toString(),
+          Createddatetime: json.decode(response.body)['created_at'],
           Expirydatetime: murls.Expirydatetime,
           click: murls.click,
           boost: murls.boost,
           Id: json.decode(response.body)['id'].toString(),
         );
-        _items.add(newURls);
+
+        _items.insert(0, newURls);
       } else {
         throw Exception('Failed to add urls');
       }

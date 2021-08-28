@@ -97,6 +97,7 @@ class _url_detailState extends State<url_detail> {
                       new SnackBar(
                         content: new Text(
                           "Copied urls",
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     );
@@ -124,8 +125,6 @@ class _url_detailState extends State<url_detail> {
                     child: ListTile(
                         title:
                             Text(' ${DateFormat.yMd().format(createddate)}')))
-                // Text('${loadedUrl.Createddatetime}'),
-                //   ))
               ],
             ),
             Divider(),

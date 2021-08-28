@@ -25,7 +25,7 @@ class _addUrlsState extends State<addUrls> {
   final _UrlController = TextEditingController();
   String selectdate = '';
   bool status = false;
-  DateTime pickdate = DateTime.now();
+  DateTime? pickdate = DateTime.now();
   Color _favIconColor = Colors.grey;
 
   var _create_urls = Murls(
@@ -81,7 +81,10 @@ class _addUrlsState extends State<addUrls> {
         };
         status = _create_urls.boost;
         selectdate = _create_urls.Expirydatetime.toString();
-        pickdate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(selectdate);
+        pickdate = (_create_urls.Expirydatetime != ''
+            ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                .parse(_create_urls.Expirydatetime)
+            : null);
 
         _UrlController.text = _create_urls.murlsUrl;
       }
@@ -191,6 +194,9 @@ class _addUrlsState extends State<addUrls> {
                                 if (value!.isEmpty) {
                                   return 'Please provide a value.';
                                 }
+                                if (value.length > 50) {
+                                  return 'name should be less then 50';
+                                }
                                 return null;
                               },
                               onSaved: (value) {
@@ -278,7 +284,7 @@ class _addUrlsState extends State<addUrls> {
                                         child: Text(
                                           selectdate == ''
                                               ? 'Expiry Date'
-                                              : '${DateFormat.yMd().format(pickdate)}',
+                                              : '${DateFormat.yMd().format(pickdate!)}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,

@@ -117,6 +117,7 @@ class _listed_urlState extends State<listed_url> {
                             userUrl(
                               urlsdata.items[i].Alias,
                               urlsdata.items[i].Id,
+                              urlsdata.items[i].boost,
                             ),
                             // Text('${urlsdata.items[i].boost}'),
 

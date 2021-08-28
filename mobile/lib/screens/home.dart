@@ -39,12 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             FittedBox(
-              child: Image.asset(
-                "assets/images/logo1.png",
+              child: SvgPicture.asset(
+                "assets/images/svg_entire_logo(1).svg",
                 height: 150,
                 width: 150,
-                cacheHeight: 150,
-                cacheWidth: 150,
+                // cacheHeight: 150,
+                // cacheWidth: 150,
               ),
             ),
             SvgPicture.asset(

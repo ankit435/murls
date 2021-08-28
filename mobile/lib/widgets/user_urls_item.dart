@@ -6,10 +6,11 @@ import 'package:provider/provider.dart';
 class userUrl extends StatelessWidget {
   final String allias;
   final String id;
+  bool boost;
 
   //const userUrl({Key? key}) : super(key: key);
 
-  userUrl(this.allias, this.id);
+  userUrl(this.allias, this.id, this.boost);
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +78,13 @@ class userUrl extends StatelessWidget {
                     title: Text(
                       '${allias[0].toUpperCase()}${allias.substring(1)}',
                       style: Theme.of(context).textTheme.headline4,
-
-                      // ${s[0].toUpperCase()}${s.substring(1)}'
                     ),
+                    trailing: boost
+                        ? IconButton(
+                            icon: Icon(Icons.blur_circular),
+                            onPressed: () {},
+                          )
+                        : null,
                   ),
                 ),
               ),
