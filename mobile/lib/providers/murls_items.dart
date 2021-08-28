@@ -10,12 +10,14 @@ import 'package:murls/Auth/services/auth_service.dart';
 
 class murls_detail with ChangeNotifier {
   List<Murls> _items = [
-    // Murls(
-    //     Alias: 'ankit',
-    //     murlsUrl: 'ebewe',
-    //     datetime: DateTime.now().toIso8601String(),
-    //     click: 0,
-    //     Id: 2.toString())
+    Murls(
+        Alias: 'ankit',
+        murlsUrl: 'ebewe',
+        Expirydatetime: DateTime.now().toIso8601String(),
+        click: 0,
+        Id: 2.toString(),
+        Createddatetime: DateTime.now().toIso8601String(),
+        UserURl: 'xhzbxjbsjhiosh')
   ];
 
   List<Murls> get items {
@@ -45,6 +47,7 @@ class murls_detail with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
+      print(response);
 
       if (response.statusCode == 201) {
         final newURls = Murls(
