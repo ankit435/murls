@@ -4,7 +4,7 @@ load_dotenv()
 
 from os import getenv
 
-IS_DEV = getenv("IS_DEV") is not None and getenv("IS_DEV").upper() == "TRUE"
+IS_DEV = getenv("IS_DEV") is not None and getenv("IS_DEV").upper() is "TRUE"
 
 if IS_DEV:
     from .dev import *
