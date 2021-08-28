@@ -23,6 +23,7 @@ jobs:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       BASE_URL: 'http://localhost:8000'
+      DJANGO_SECRET_KEY: ${{github.sha}}-${{github.sha}}-${{github.sha}}
 
     services:
       postgres:
@@ -82,7 +83,7 @@ jobs:
       - name: Run migrations
         run: python manage.py migrate
         env:
-          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.head_ref}}
+          DJANGO_SECRET_KEY: ${{env.DJANGO_SECRET_KEY}}
           DB_NAME: ${{env.POSTGRES_DB}}
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
@@ -95,7 +96,7 @@ jobs:
         run: |
           python manage.py check --deploy
         env:
-          DJANGO_SECRET_KEY: ${{github.sha}}-${{github.head_ref}}
+          DJANGO_SECRET_KEY: ${{env.DJANGO_SECRET_KEY}}
           DB_NAME: ${{env.POSTGRES_DB}}
           DB_USER: ${{env.POSTGRES_USER}}
           DB_PASSWORD: ${{env.POSTGRES_PASSWORD}}
