@@ -22,6 +22,7 @@ jobs:
       POSTGRES_PORT: 5432
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      BASE_URL: 'http://localhost:8000'
 
     services:
       postgres:
@@ -89,6 +90,7 @@ jobs:
           DB_PORT: ${{env.POSTGRES_PORT}}
           REDIS_HOST: ${{env.REDIS_HOST}}
           REDIS_PORT: ${{env.REDIS_PORT}}
+          BASE_URL: ${{env.BASE_URL}}
 
       - name: Check server ready for production
         run: |
@@ -102,3 +104,4 @@ jobs:
           DB_PORT: ${{env.POSTGRES_PORT}}
           REDIS_HOST: ${{env.REDIS_HOST}}
           REDIS_PORT: ${{env.REDIS_PORT}}
+          BASE_URL: ${{env.BASE_URL}}
