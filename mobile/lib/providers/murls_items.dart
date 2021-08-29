@@ -29,6 +29,12 @@ class murls_detail with ChangeNotifier {
     return _items.firstWhere((urls) => urls.Id == id);
   }
 
+  List<Murls> findByAlias(String Alias) {
+    return _items
+        .where((urls) => urls.Alias.contains(Alias.toLowerCase()))
+        .toList();
+  }
+
   Future<void> addUrls(Murls murls) async {
     //Auth0User? profile = AuthService.instance.profile;
     // final url =
@@ -129,12 +135,12 @@ class murls_detail with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
-      print(Response);
-      if ((Response.statusCode >= 400)) {
+      print(Response.statusCode);
+      if ((Response.statusCode == 200)) {
         _items[UrlIndex] = newURLS;
         notifyListeners();
       } else {
-        throw Exception('Failed to get user details');
+        //throw Exception('Failed to get user details');
       }
     } else {
       print('no update');

@@ -19,9 +19,22 @@ class listed_url extends StatefulWidget {
 class _listed_urlState extends State<listed_url> {
   var _isInit = true;
   var _isLoading = false;
+  var urlsdata;
+  String? filter;
+  TextEditingController searchController = new TextEditingController();
 
   void initState() {
+    searchController.addListener(() {
+      setState(() {
+        filter = searchController.text;
+      });
+    });
     super.initState();
+  }
+
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   Future<void> didChangeDependencies() async {
@@ -60,6 +73,7 @@ class _listed_urlState extends State<listed_url> {
   Auth0User? profile = AuthService.instance.profile;
 
   bool picture = false;
+  bool is_searching = false;
 
   void _startAddNewUrl(BuildContext context) {
     showModalBottomSheet(
@@ -77,18 +91,41 @@ class _listed_urlState extends State<listed_url> {
     );
   }
 
-  Future<void> _refreshUrls(BuildContext context) async {
-    await Provider.of<murls_detail>(context, listen: false).fetchAndSetUrls();
-  }
+  // Future<void> _refreshUrls(BuildContext context) async {
+  //   await Provider.of<murls_detail>(context, listen: false).fetchAndSetUrls();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final urlsdata = Provider.of<murls_detail>(context);
-
+    print('building');
+    var fiterurl;
+    urlsdata = Provider.of<murls_detail>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('All URLS'),
+        title: !is_searching
+            ? Text('All URLS')
+            : TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                    hintText: 'Search', icon: Icon(Icons.search)),
+              ),
         actions: <Widget>[
+          is_searching
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      this.is_searching = !this.is_searching;
+                    });
+                  },
+                  icon: Icon(Icons.cancel))
+              : IconButton(
+                  onPressed: () {
+                    setState(() {
+                      this.is_searching = !this.is_searching;
+                    });
+                  },
+                  icon: Icon(Icons.search),
+                ),
           GestureDetector(
             onTap: () {},
             child: _avatar(profile),
@@ -127,35 +164,37 @@ class _listed_urlState extends State<listed_url> {
                         );
                       },
                     )
-                  :
-                  // FutureBuilder(
-                  //     future: _refreshUrls(context),
-                  //     builder: (ctx, snapshot) =>
-                  //         snapshot.connectionState == ConnectionState.waiting
-                  //             ? Center(
-                  //                 child: CircularProgressIndicator(),
-                  //               )
-                  //             : RefreshIndicator(
-                  //                 onRefresh: () => _refreshUrls(context),
-                  //                 child: Consumer<murls_detail>(
-                  //                   builder: (ctx, urlsdata, _) =>
-
-                  Padding(
+                  : Padding(
                       padding: EdgeInsets.all(6),
                       child: ListView.builder(
                         itemCount: urlsdata.items.length,
-                        itemBuilder: (_, i) => Column(
-                          children: [
-                            userUrl(
-                              urlsdata.items[i].Alias,
-                              urlsdata.items[i].Id,
-                              urlsdata.items[i].boost,
-                            ),
-                            // Text('${urlsdata.items[i].boost}'),
-
-                            Divider(),
-                          ],
-                        ),
+                        itemBuilder: (_, i) {
+                          return filter == null || filter == ""
+                              ? Column(
+                                  children: [
+                                    userUrl(
+                                      urlsdata.items[i].Alias,
+                                      urlsdata.items[i].Id,
+                                      urlsdata.items[i].boost,
+                                    ),
+                                    Divider(),
+                                  ],
+                                )
+                              : '${urlsdata.items[i].Alias}'
+                                      .toLowerCase()
+                                      .contains(filter!.toLowerCase())
+                                  ? Column(
+                                      children: [
+                                        userUrl(
+                                          urlsdata.items[i].Alias,
+                                          urlsdata.items[i].Id,
+                                          urlsdata.items[i].boost,
+                                        ),
+                                        Divider(),
+                                      ],
+                                    )
+                                  : new Container();
+                        },
                       ),
                       //                 ),
                       //               ),
