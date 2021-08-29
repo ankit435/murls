@@ -7,34 +7,64 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import './add_new_urls.dart';
 
-import 'profile.dart';
-
+// ignore: camel_case_types
 class listed_url extends StatefulWidget {
-  //const listed_url({Key? key}) : super(key: key);
   static const routeName = '/listed-urls';
 
   @override
   _listed_urlState createState() => _listed_urlState();
 }
 
+// ignore: camel_case_types
 class _listed_urlState extends State<listed_url> {
   var _isInit = true;
   var _isLoading = false;
+  var urlsdata;
+  String? filter;
+  TextEditingController searchController = new TextEditingController();
 
   void initState() {
+    searchController.addListener(() {
+      setState(() {
+        filter = searchController.text;
+      });
+    });
     super.initState();
   }
 
-  void didChangeDependencies() {
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<murls_detail>(context).fetchAndSetUrls().then((_) {
-        setState(() {
-          _isLoading = false;
+      try {
+        await Provider.of<murls_detail>(context).fetchAndSetUrls().then((_) {
+          setState(() {
+            _isLoading = false;
+          });
         });
-      });
+      } catch (error) {
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Check internet connection !.'),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('okay'),
+              )
+            ],
+          ),
+        );
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -43,6 +73,7 @@ class _listed_urlState extends State<listed_url> {
   Auth0User? profile = AuthService.instance.profile;
 
   bool picture = false;
+  bool is_searching = false;
 
   void _startAddNewUrl(BuildContext context) {
     showModalBottomSheet(
@@ -60,18 +91,43 @@ class _listed_urlState extends State<listed_url> {
     );
   }
 
+  // Future<void> _refreshUrls(BuildContext context) async {
+  //   await Provider.of<murls_detail>(context, listen: false).fetchAndSetUrls();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    final urlsdata = Provider.of<murls_detail>(context);
-
+    print('building');
+    var fiterurl;
+    urlsdata = Provider.of<murls_detail>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('All URLS'),
+        title: !is_searching
+            ? Text('All URLS')
+            : TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                    hintText: 'Search', icon: Icon(Icons.search)),
+              ),
         actions: <Widget>[
+          is_searching
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      this.is_searching = !this.is_searching;
+                    });
+                  },
+                  icon: Icon(Icons.cancel))
+              : IconButton(
+                  onPressed: () {
+                    setState(() {
+                      this.is_searching = !this.is_searching;
+                    });
+                  },
+                  icon: Icon(Icons.search),
+                ),
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(ProfileScreen.routeName);
-            },
+            onTap: () {},
             child: _avatar(profile),
           ),
         ],
@@ -112,18 +168,37 @@ class _listed_urlState extends State<listed_url> {
                       padding: EdgeInsets.all(6),
                       child: ListView.builder(
                         itemCount: urlsdata.items.length,
-                        itemBuilder: (_, i) => Column(
-                          children: [
-                            userUrl(
-                              urlsdata.items[i].Alias,
-                              urlsdata.items[i].Id,
-                            ),
-                            // Text('${urlsdata.items[i].boost}'),
-
-                            Divider(),
-                          ],
-                        ),
+                        itemBuilder: (_, i) {
+                          return filter == null || filter == ""
+                              ? Column(
+                                  children: [
+                                    userUrl(
+                                      urlsdata.items[i].Alias,
+                                      urlsdata.items[i].Id,
+                                      urlsdata.items[i].boost,
+                                    ),
+                                    Divider(),
+                                  ],
+                                )
+                              : '${urlsdata.items[i].Alias}'
+                                      .toLowerCase()
+                                      .contains(filter!.toLowerCase())
+                                  ? Column(
+                                      children: [
+                                        userUrl(
+                                          urlsdata.items[i].Alias,
+                                          urlsdata.items[i].Id,
+                                          urlsdata.items[i].boost,
+                                        ),
+                                        Divider(),
+                                      ],
+                                    )
+                                  : new Container();
+                        },
                       ),
+                      //                 ),
+                      //               ),
+                      //             ),
                     ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

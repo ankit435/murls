@@ -44,16 +44,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final islansacpe =
-        MediaQuery.of(context).orientation == Orientation.landscape;
     MediaQueryData _mediaQueryData = MediaQuery.of(context);
     var widths = _mediaQueryData.size.width;
     var heights = _mediaQueryData.size.height;
-    // if (islansacpe) {
-    //   var temp = heights;
-    //   heights = widths;
-    //   widths = temp;
-    // }
+
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -78,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerRight,
-                  child: FlatButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       _storeOnboardInfo();
                       Navigator.pushReplacement(
@@ -219,7 +213,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ? Expanded(
                         child: Align(
                           alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               _pageController.nextPage(
                                 duration: Duration(milliseconds: 500),

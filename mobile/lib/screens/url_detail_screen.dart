@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:murls/providers/murls_items.dart';
-import 'package:murls/screens/listed_url_screen.dart';
+
 import 'package:provider/provider.dart';
 
 import '../widgets/graph.dart';
 import 'add_new_urls.dart';
 
+// ignore: camel_case_types
 class url_detail extends StatefulWidget {
   const url_detail({Key? key}) : super(key: key);
 
@@ -16,7 +18,9 @@ class url_detail extends StatefulWidget {
   _url_detailState createState() => _url_detailState();
 }
 
+// ignore: camel_case_types
 class _url_detailState extends State<url_detail> {
+  // ignore: non_constant_identifier_names
   void _startAddNewUrl(BuildContext context, String Id) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -44,11 +48,27 @@ class _url_detailState extends State<url_detail> {
       listen: false,
     ).findById(urlid);
 
+    DateTime? expirydate = loadedUrl.Expirydatetime != ''
+        ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            .parse(loadedUrl.Expirydatetime)
+        : null;
+    DateTime createddate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+        .parse(loadedUrl.Createddatetime);
+    int end = loadedUrl.murlsUrl.length < 20 ? loadedUrl.murlsUrl.length : 40;
+
     return Scaffold(
       key: key,
       appBar: AppBar(
         title: Text(
             '${loadedUrl.Alias[0].toUpperCase()}${loadedUrl.Alias.substring(1)}'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _startAddNewUrl(context, loadedUrl.Id);
+            },
+            icon: Icon(Icons.edit),
+          )
+        ],
       ),
       body: Container(
         height: double.infinity,
@@ -63,71 +83,94 @@ class _url_detailState extends State<url_detail> {
               child: BarChartSample1(),
             ),
             SizedBox(height: 10),
-            GestureDetector(
-              child: ListTile(
-                title: Text(' ${loadedUrl.murlsUrl}'),
-                trailing: Container(
-                  width: 100,
-                  child: Row(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        //onPressed: () => _startAddNewUrl(context),
-                        onPressed: () {
-                          // Navigator.of(context).pushNamed(addUrls.routeName,
-                          //     arguments: loadedUrl.Id);
-
-                          _startAddNewUrl(context, loadedUrl.Id);
-                        },
-                        color: Theme.of(context).primaryColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: ListTile(title: Text('Shorten_URL'))),
+                Expanded(
+                    child: GestureDetector(
+                  child: ListTile(
+                    title: Text('https://${loadedUrl.UserURl}'),
+                  ),
+                  onLongPress: () {
+                    Clipboard.setData(
+                      new ClipboardData(text: 'https://${loadedUrl.UserURl}'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      new SnackBar(
+                        content: new Text(
+                          "Copied urls",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ],
+                    );
+                  },
+                )),
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: ListTile(title: Text('URL'))),
+                Expanded(
+                    child: ListTile(
+                        title: FittedBox(
+                            child: Text(
+                                ' ${loadedUrl.murlsUrl.substring(0, end)}'))))
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: ListTile(title: Text('Created Date'))),
+                Expanded(
+                    child: ListTile(
+                        title:
+                            Text(' ${DateFormat.yMd().format(createddate)}')))
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: ListTile(title: Text('Expiry Date'))),
+                Expanded(
+                    child: ListTile(
+                        title: Text(expirydate != null
+                            ? '${DateFormat.yMd().format(expirydate)}'
+                            : 'no expiry date')))
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: ListTile(title: Text('Total Click'))),
+                Expanded(
+                  child: ListTile(
+                    title: Text('${loadedUrl.click}'),
                   ),
-                ),
-              ),
-              onLongPress: () {
-                Clipboard.setData(
-                  new ClipboardData(text: '${loadedUrl.murlsUrl}'),
-                );
-                key.currentState!.showSnackBar(
-                  new SnackBar(
-                    content: new Text(
-                      "Copied urls",
-                    ),
+                )
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: ListTile(title: Text('BOOST'))),
+                Expanded(
+                  child: ListTile(
+                    title: Text(loadedUrl.boost
+                        ? 'your url is boosted'
+                        : 'your url not is boosted'),
+                    trailing: loadedUrl.boost
+                        ? Icon(Icons.bolt)
+                        : Icon(Icons.cable_rounded),
                   ),
-                );
-              },
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Text(
-                'Click == ${loadedUrl.click}',
-                textAlign: TextAlign.center,
-                softWrap: true,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Text(
-                loadedUrl.datetime != '' ? 'Date == ${loadedUrl.datetime}' : '',
-                //loadedUrl.datetime != '' ? 'Date == ${DateFormat.yMd().format(loadedUrl.datetime)}',
-                textAlign: TextAlign.center,
-                softWrap: true,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Text(
-                'Boost == ${loadedUrl.boost}',
-                textAlign: TextAlign.center,
-                softWrap: true,
-              ),
+                )
+              ],
             ),
           ],
         ),
