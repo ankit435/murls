@@ -20,4 +20,4 @@ urlpatterns = [
     path("_/", include("urls.urls")),
 ]
 
-handler404 = 'utils.errors.not_found.Page_Not_Found'
+handler404 = "utils.errors.not_found.Page_Not_Found"

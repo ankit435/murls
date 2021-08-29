@@ -14,7 +14,7 @@ redis = Redis()
 class Redirector(APIView):
 
     permission_classes = [AllowAny]
-    
+
     def get(self, request: HttpRequest, slug: str) -> QuerySet[Url]:
 
         cached_location = redis.get(slug)

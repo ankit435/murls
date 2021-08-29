@@ -7,7 +7,7 @@ AUTH0_DOMAIN = getenv("AUTHO_DOMAIN", "murls1.jp.auth0.com")
 
 
 def get_user(auth: str):
-    print('auth = ',auth)
+    print("auth = ", auth)
     try:
         current_request = request.Request(
             "https://" + AUTH0_DOMAIN + "/userinfo",
@@ -17,8 +17,9 @@ def get_user(auth: str):
         resp = request.urlopen(current_request).read()
         data = json_loads(resp)
         return data.get("email")
-        
+
     except:
         raise AuthenticationFailed("Could not get the user with the current token")
-    
-# print(get_user('c0cikPu8oSvTtz8UXQN4MrQNxF5iBq2X'))
+
+
+# print(get_user('QUQlvcgIAMbjqEUkI23YNUJoLLLPXGBu'))
