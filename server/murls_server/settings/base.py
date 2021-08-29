@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     # django apps
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
     "django.contrib.staticfiles",
     # third party apps
     "rest_framework",
