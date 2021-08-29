@@ -1,29 +1,22 @@
-from django.db.models.query import QuerySet
-from django.http.request import HttpRequest
 from django.http import HttpResponsePermanentRedirect
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 
 from urls.models import Url
 from utils.redis.Client import Redis
+from utils.update_url_data import update_url_data
 
 redis = Redis()
 
 
-class Redirector(APIView):
+def redirector(request, slug):
 
-    permission_classes = [AllowAny]
+    update_url_data(slug)
+    cached_location = redis.get(slug)
 
-    def get(self, request: HttpRequest, slug: str) -> QuerySet[Url]:
+    if cached_location is not None:
+        return HttpResponsePermanentRedirect(cached_location)
 
-        cached_location = redis.get(slug)
-
-        if cached_location is not None:
-            return HttpResponsePermanentRedirect(cached_location)
-
-        try:
-            found_url = Url.objects.values("location").get(slug=slug)
-            return HttpResponsePermanentRedirect(found_url.get("location"))
-        except:
-            return HttpResponsePermanentRedirect("/")
+    try:
+        found_url = Url.objects.values("location").get(slug=slug)
+        return HttpResponsePermanentRedirect(found_url.get("location"))
+    except:
+        return HttpResponsePermanentRedirect("/")
