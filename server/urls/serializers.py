@@ -19,11 +19,11 @@ class UrlSerializer(ModelSerializer):
         fields = (
             "id",
             "name",
-            "description",
             "location",
             "boosted",
             "clicks",
             "slug",
+            "expiry_date",
             "created_at",
             "updated_at",
         )
