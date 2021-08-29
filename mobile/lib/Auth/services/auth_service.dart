@@ -54,11 +54,13 @@ class AuthService {
         scopes: ['openid', 'profile', 'offline_access', 'email'],
         promptValues: ['login'],
       );
+      print('hi');
 
       final AuthorizationTokenResponse? result =
           await appAuth.authorizeAndExchangeCode(
         authorizationTokenRequest,
       );
+      print(result);
 
       return await _setLocalVariables(result);
       // } on PlatformException {
@@ -106,6 +108,7 @@ class AuthService {
     final bool isValidResult =
         result != null && result.accessToken != null && result.idToken != null;
 
+    print(result.accessToken);
     if (isValidResult) {
       auth0AccessToken = result.accessToken;
 

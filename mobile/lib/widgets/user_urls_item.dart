@@ -80,8 +80,11 @@ class userUrl extends StatelessWidget {
                       '${allias[0].toUpperCase()}${allias.substring(1)}',
                       style: Theme.of(context).textTheme.headline4,
                     ),
+<<<<<<< HEAD
                     subtitle: Text(
                         '${allias[0].toUpperCase()}${allias.substring(1)}'),
+=======
+>>>>>>> a8d644b23b24ad5eba808586070b1e95d9c44a07
                     trailing: boost ? Icon(Icons.bolt) : null,
                   ),
                 ),

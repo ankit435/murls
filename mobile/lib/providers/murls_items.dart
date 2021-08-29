@@ -54,6 +54,7 @@ class murls_detail with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
+      print(response);
 
       if (response.statusCode == 201) {
         final newURls = Murls(
@@ -134,7 +135,11 @@ class murls_detail with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
+<<<<<<< HEAD
 
+=======
+      print(Response.statusCode);
+>>>>>>> a8d644b23b24ad5eba808586070b1e95d9c44a07
       if ((Response.statusCode == 200)) {
         _items[UrlIndex] = newURLS;
         notifyListeners();

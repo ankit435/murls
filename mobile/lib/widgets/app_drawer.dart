@@ -8,6 +8,7 @@ import 'package:murls/Auth/models/auth0_user.dart';
 Auth0User? profile = AuthService.instance.profile;
 
 class AppDrawer extends StatelessWidget {
+<<<<<<< HEAD
   Padding _avatar(Auth0User? profile) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -40,6 +41,40 @@ class AppDrawer extends StatelessWidget {
             ),
           );
   }
+=======
+  // Padding _avatar(Auth0User? profile) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: FittedBox(
+  //       fit: BoxFit.cover,
+  //       child: ClipRRect(
+  //         clipBehavior: Clip.antiAlias,
+  //         borderRadius: BorderRadius.all(Radius.circular(600)),
+  //         child: Container(
+  //           child: _avatarPhoto(profile),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget _avatarPhoto(Auth0User? profile) {
+  //   return profile != null && profile.hasImage
+  //       ? Image.network(
+  //           profile.picture,
+  //           width: 20,
+  //           height: 20,
+  //         )
+  //       : Container(
+  //           width: 20,
+  //           height: 20,
+  //           //  color: Colors.brown,
+  //           child: Center(
+  //             child: Text('${profile?.name[0].toUpperCase()}'),
+  //           ),
+  //         );
+  // }
+>>>>>>> a8d644b23b24ad5eba808586070b1e95d9c44a07
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +85,13 @@ class AppDrawer extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 AppBar(
+<<<<<<< HEAD
                   //  leading: Icon(Icons.account_circle),
                   leading: _avatar(profile),
+=======
+                  leading: Icon(Icons.account_circle),
+                  // leading:listed_url(),
+>>>>>>> a8d644b23b24ad5eba808586070b1e95d9c44a07
                   title: Text('${profile?.name.toUpperCase()}'),
                   automaticallyImplyLeading: false,
                 ),
