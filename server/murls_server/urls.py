@@ -20,7 +20,6 @@ from utils.errors.not_found import Page_Not_Found
 urlpatterns = [
     path("", include("redirector.urls")),
     path("_/", include("urls.urls")),
-    path("testing/", include("members.urls")),
 ]
 
 handler404 = Page_Not_Found

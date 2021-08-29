@@ -1,7 +1,7 @@
 from os import getenv
 
 from utils.base_url import get_base_url_host
-from .base import BASE_DIR
+from .base import BASE_DIR, REST_FRAMEWORK
 
 DEBUG = False
 
@@ -21,9 +21,7 @@ DATABASES = {
     }
 }
 
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
-}
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ("rest_framework.renderers.JSONRenderer",)
 
 CSRF_COOKIE_SECURE = True
 
