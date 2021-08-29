@@ -20,6 +20,3 @@ def get_user(auth: str):
 
     except:
         raise AuthenticationFailed("Could not get the user with the current token")
-
-
-# print(get_user('QUQlvcgIAMbjqEUkI23YNUJoLLLPXGBu'))

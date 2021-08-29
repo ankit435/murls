@@ -19,6 +19,7 @@ class UrlListCreateView(ListCreateAPIView):
         except Exception as e:
             raise ValidationError(e)
 
+
 class UrlDetailBase(RetrieveUpdateDestroyAPIView):
     queryset = Url.objects.all()
     serializer_class = UrlSerializer

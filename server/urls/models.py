@@ -12,7 +12,7 @@ class Url(models.Model):
     clicks = models.IntegerField(default=0, db_index=True)
     boosted = models.BooleanField(verbose_name="is_boosted", default=False)
     expiry_date = models.CharField(blank=True, max_length=100)
-    creator = models.ForeignKey(User,on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

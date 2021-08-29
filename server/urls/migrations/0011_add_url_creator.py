@@ -4,23 +4,29 @@ from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
 
-def delete_all_url_objects(apps,schema_editor):
+
+def delete_all_url_objects(apps, schema_editor):
     UrlModel = apps.get_model("urls", "Url")
     UrlModel.objects.all().delete()
+
 
 class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('urls', '0010_remove_url_description'),
+        ("urls", "0010_remove_url_description"),
     ]
 
     operations = [
-        migrations.RunPython(delete_all_url_objects,reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(
+            delete_all_url_objects, reverse_code=migrations.RunPython.noop
+        ),
         migrations.AddField(
-            model_name='url',
-            name='creator',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='auth.user'),
+            model_name="url",
+            name="creator",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="auth.user"
+            ),
             preserve_default=False,
         ),
     ]
