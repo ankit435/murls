@@ -1,18 +1,24 @@
 from os import getenv
 from urllib import request
+from json import loads as json_loads
+from rest_framework.exceptions import AuthenticationFailed
 
 AUTH0_DOMAIN = getenv("AUTHO_DOMAIN", "murls1.jp.auth0.com")
 
 
 def get_user(auth: str):
-    current_request = request.Request(
-        "https://" + AUTH0_DOMAIN + "/userinfo",
-        headers={"Authorization": "Bearer: YjHIkhENHaFQINNUosfwV6t22tVoyBa6"},
-    )
+    print('auth = ',auth)
+    try:
+        current_request = request.Request(
+            "https://" + AUTH0_DOMAIN + "/userinfo",
+            headers={"Authorization": "Bearer {}".format(auth)},
+        )
 
-    resp = request.urlopen(current_request)
-
-    print("the response was ", resp.read().decode("utf-8"))
-
-
-get_user("afdsa")
+        resp = request.urlopen(current_request).read()
+        data = json_loads(resp)
+        return data.get("email")
+        
+    except:
+        raise AuthenticationFailed("Could not get the user with the current token")
+    
+# print(get_user('c0cikPu8oSvTtz8UXQN4MrQNxF5iBq2X'))
