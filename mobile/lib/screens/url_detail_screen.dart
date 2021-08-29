@@ -115,9 +115,8 @@ class _url_detailState extends State<url_detail> {
                 Expanded(child: ListTile(title: Text('URL'))),
                 Expanded(
                     child: ListTile(
-                        title: FittedBox(
-                            child: Text(
-                                ' ${loadedUrl.murlsUrl.substring(0, end)}'))))
+                        title:
+                            Text(' ${loadedUrl.murlsUrl.substring(0, end)}')))
               ],
             ),
             Divider(),

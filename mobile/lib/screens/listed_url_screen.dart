@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import './add_new_urls.dart';
 
-// ignore: camel_case_types
 class listed_url extends StatefulWidget {
   static const routeName = '/listed-urls';
 
@@ -15,7 +14,6 @@ class listed_url extends StatefulWidget {
   _listed_urlState createState() => _listed_urlState();
 }
 
-// ignore: camel_case_types
 class _listed_urlState extends State<listed_url> {
   var _isInit = true;
   var _isLoading = false;
@@ -91,13 +89,8 @@ class _listed_urlState extends State<listed_url> {
     );
   }
 
-  // Future<void> _refreshUrls(BuildContext context) async {
-  //   await Provider.of<murls_detail>(context, listen: false).fetchAndSetUrls();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    print('building');
     var fiterurl;
     urlsdata = Provider.of<murls_detail>(context);
     return Scaffold(
@@ -126,10 +119,6 @@ class _listed_urlState extends State<listed_url> {
                   },
                   icon: Icon(Icons.search),
                 ),
-          GestureDetector(
-            onTap: () {},
-            child: _avatar(profile),
-          ),
         ],
       ),
       drawer: AppDrawer(),
@@ -196,9 +185,6 @@ class _listed_urlState extends State<listed_url> {
                                   : new Container();
                         },
                       ),
-                      //                 ),
-                      //               ),
-                      //             ),
                     ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -207,38 +193,5 @@ class _listed_urlState extends State<listed_url> {
         child: Icon(Icons.add),
       ),
     );
-  }
-
-  Padding _avatar(Auth0User? profile) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: ClipRRect(
-          clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.all(Radius.circular(600)),
-          child: Container(
-            child: _avatarPhoto(profile),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _avatarPhoto(Auth0User? profile) {
-    return profile != null && profile.hasImage
-        ? Image.network(
-            profile.picture,
-            width: 20,
-            height: 20,
-          )
-        : Container(
-            width: 20,
-            height: 20,
-            // color: darkBrown,
-            child: Center(
-              child: Text('${profile?.name[0].toUpperCase()}'),
-            ),
-          );
   }
 }

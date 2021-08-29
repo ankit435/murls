@@ -54,7 +54,6 @@ class murls_detail with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
-      print(response);
 
       if (response.statusCode == 201) {
         final newURls = Murls(
@@ -135,16 +134,14 @@ class murls_detail with ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8'
         },
       );
-      print(Response.statusCode);
+
       if ((Response.statusCode == 200)) {
         _items[UrlIndex] = newURLS;
         notifyListeners();
       } else {
         //throw Exception('Failed to get user details');
       }
-    } else {
-      print('no update');
-    }
+    } else {}
   }
 
   Future<void> removeItem(String urlId) async {

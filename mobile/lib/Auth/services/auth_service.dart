@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:murls/helpers/constants.dart';
@@ -54,13 +53,11 @@ class AuthService {
         scopes: ['openid', 'profile', 'offline_access', 'email'],
         promptValues: ['login'],
       );
-      print('hi');
 
       final AuthorizationTokenResponse? result =
           await appAuth.authorizeAndExchangeCode(
         authorizationTokenRequest,
       );
-      print(result);
 
       return await _setLocalVariables(result);
       // } on PlatformException {
@@ -108,7 +105,7 @@ class AuthService {
     final bool isValidResult =
         result != null && result.accessToken != null && result.idToken != null;
 
-    print(result.accessToken);
+    // print(result.accessToken);
     if (isValidResult) {
       auth0AccessToken = result.accessToken;
 
