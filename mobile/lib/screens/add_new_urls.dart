@@ -264,6 +264,7 @@ class _addUrlsState extends State<addUrls> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 23,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         onPressed: () {
