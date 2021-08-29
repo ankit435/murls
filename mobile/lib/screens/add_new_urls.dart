@@ -8,6 +8,7 @@ import '../providers/murls_item.dart';
 import '../providers/murls_items.dart';
 import 'package:murls/utilities/styles.dart';
 
+// ignore: camel_case_types
 class addUrls extends StatefulWidget {
   // const addUrls({Key? key}) : super(key: key);
   static const routeName = '/add-urls';
@@ -18,23 +19,28 @@ class addUrls extends StatefulWidget {
   _addUrlsState createState() => _addUrlsState();
 }
 
+// ignore: camel_case_types
 class _addUrlsState extends State<addUrls> {
   final _form = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   final _URLSFocusNode = FocusNode();
 
+  // ignore: non_constant_identifier_names
   final _UrlController = TextEditingController();
   String selectdate = '';
   bool status = false;
-  DateTime pickdate = DateTime.now();
-  Color _favIconColor = Colors.grey;
+  DateTime? pickdate = DateTime.now();
 
+  // ignore: non_constant_identifier_names
   var _create_urls = Murls(
     Alias: '',
     murlsUrl: '',
-    datetime: '',
+    Expirydatetime: '',
     click: 0,
     Id: '',
     boost: false,
+    Createddatetime: DateTime.now().toIso8601String(),
+    UserURl: '',
   );
   var _initValues = {
     'Alias': '',
@@ -72,14 +78,17 @@ class _addUrlsState extends State<addUrls> {
 
         _initValues = {
           'Alias': _create_urls.Alias,
-          'datetime': _create_urls.datetime,
+          'datetime': _create_urls.Expirydatetime,
           'click': _create_urls.click.toString(),
           'boost': _create_urls.boost.toString(),
           'murlsUrl': '',
         };
         status = _create_urls.boost;
-        selectdate = _create_urls.datetime.toString();
-        pickdate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(selectdate);
+        selectdate = _create_urls.Expirydatetime.toString();
+        pickdate = (_create_urls.Expirydatetime != ''
+            ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                .parse(_create_urls.Expirydatetime)
+            : null);
 
         _UrlController.text = _create_urls.murlsUrl;
       }
@@ -113,7 +122,7 @@ class _addUrlsState extends State<addUrls> {
             title: Text('An error occurred!'),
             content: Text('Something went wrong.'),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -134,7 +143,7 @@ class _addUrlsState extends State<addUrls> {
             title: Text('An error occurred!'),
             content: Text('Something went wrong.'),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -189,16 +198,21 @@ class _addUrlsState extends State<addUrls> {
                                 if (value!.isEmpty) {
                                   return 'Please provide a value.';
                                 }
+                                if (value.length > 50) {
+                                  return 'name should be less then 50';
+                                }
                                 return null;
                               },
                               onSaved: (value) {
                                 _create_urls = Murls(
                                   Alias: value!.toLowerCase().toString(),
                                   murlsUrl: _create_urls.murlsUrl,
-                                  datetime: _create_urls.datetime,
+                                  Expirydatetime: _create_urls.Expirydatetime,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
                                   boost: _create_urls.boost,
+                                  Createddatetime: _create_urls.Createddatetime,
+                                  UserURl: _create_urls.UserURl,
                                 );
                               },
                             ),
@@ -226,10 +240,12 @@ class _addUrlsState extends State<addUrls> {
                                 _create_urls = Murls(
                                   Alias: _create_urls.Alias,
                                   murlsUrl: value.toString(),
-                                  datetime: _create_urls.datetime,
+                                  Expirydatetime: _create_urls.Expirydatetime,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
                                   boost: _create_urls.boost,
+                                  Createddatetime: _create_urls.Createddatetime,
+                                  UserURl: _create_urls.UserURl,
                                 );
                               },
                             ),
@@ -242,12 +258,13 @@ class _addUrlsState extends State<addUrls> {
                                     SizedBox(
                                       height: 35,
                                       width: 145,
-                                      child: OutlineButton(
+                                      child: OutlinedButton(
                                         child: Text(
                                           status ? 'BOOSTED' : 'BOOST',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 23,
+                                            color: Colors.black,
                                           ),
                                         ),
                                         onPressed: () {
@@ -272,7 +289,7 @@ class _addUrlsState extends State<addUrls> {
                                         child: Text(
                                           selectdate == ''
                                               ? 'Expiry Date'
-                                              : '${DateFormat.yMd().format(pickdate)}',
+                                              : '${DateFormat.yMd().format(pickdate!)}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
@@ -295,10 +312,12 @@ class _addUrlsState extends State<addUrls> {
                                 _create_urls = Murls(
                                   Alias: _create_urls.Alias,
                                   murlsUrl: _create_urls.murlsUrl,
-                                  datetime: selectdate,
+                                  Expirydatetime: selectdate,
                                   click: _create_urls.click,
                                   Id: _create_urls.Id,
                                   boost: status,
+                                  Createddatetime: _create_urls.Createddatetime,
+                                  UserURl: _create_urls.UserURl,
                                 );
 
                                 _saveForm();

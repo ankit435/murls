@@ -3,13 +3,15 @@ import 'package:murls/providers/murls_items.dart';
 import 'package:murls/screens/url_detail_screen.dart';
 import 'package:provider/provider.dart';
 
+// ignore: camel_case_types
 class userUrl extends StatelessWidget {
   final String allias;
   final String id;
+  bool boost;
 
   //const userUrl({Key? key}) : super(key: key);
 
-  userUrl(this.allias, this.id);
+  userUrl(this.allias, this.id, this.boost);
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,13 @@ class userUrl extends StatelessWidget {
               'Do you want to remove the this url?',
             ),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 child: Text('No'),
                 onPressed: () {
                   Navigator.of(ctx).pop(false);
                 },
               ),
-              FlatButton(
+              ElevatedButton(
                 child: Text('Yes'),
                 onPressed: () {
                   Navigator.of(ctx).pop(true);
@@ -77,9 +79,10 @@ class userUrl extends StatelessWidget {
                     title: Text(
                       '${allias[0].toUpperCase()}${allias.substring(1)}',
                       style: Theme.of(context).textTheme.headline4,
-
-                      // ${s[0].toUpperCase()}${s.substring(1)}'
                     ),
+                    subtitle: Text(
+                        '${allias[0].toUpperCase()}${allias.substring(1)}'),
+                    trailing: boost ? Icon(Icons.bolt) : null,
                   ),
                 ),
               ),

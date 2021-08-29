@@ -21,30 +21,15 @@ ThemeData getTheme() {
         fontFamily: GoogleFonts.lacquer().fontFamily,
       ),
       headline6: TextStyle(color: darkBrown),
-      // caption: TextStyle(color: darkBrown),
-      // bodyText1: TextStyle(color: darkBrown),
-      // subtitle1: TextStyle(color: darkBrown),
-      // subtitle2: TextStyle(color: darkBrown),
-      // bodyText2: TextStyle(color: darkBrown),
-      // overline: TextStyle(color: darkBrown),
-      // button: TextStyle(color: darkBrown),
+     
     ),
     scaffoldBackgroundColor: Colors.white,
     fontFamily: GoogleFonts.lato().fontFamily,
-    // textButtonTheme: TextButtonThemeData(
-    //   style: ButtonStyle(
-    //     foregroundColor: MaterialStateProperty.all(darkBrown),
-    //     padding: MaterialStateProperty.all<EdgeInsets>(
-    //       const EdgeInsets.fromLTRB(55, 15, 55, 15),
-    //     ),
-    //     shape: MaterialStateProperty.all(
-    //       StadiumBorder(),
-    //     ),
-    //   ),
-    // ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(darkBrown),
+        // backgroundColor: MaterialStateProperty.all(darkBrown),
+        backgroundColor:
+            MaterialStateProperty.all(Color.fromRGBO(255, 165, 0, 1)),
         padding: MaterialStateProperty.all<EdgeInsets>(
           const EdgeInsets.fromLTRB(55, 15, 55, 15),
         ),
@@ -56,16 +41,6 @@ ThemeData getTheme() {
         ),
       ),
     ),
-    // outlinedButtonTheme: OutlinedButtonThemeData(
-    //   style: ButtonStyle(
-    //     padding: MaterialStateProperty.all<EdgeInsets>(
-    //       const EdgeInsets.fromLTRB(55, 15, 55, 15),
-    //     ),
-    //     shape: MaterialStateProperty.all(
-    //       StadiumBorder(),
-    //     ),
-    //   ),
-    // ),
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: Colors.brown),
       color: Colors.transparent,

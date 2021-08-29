@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:murls/helpers/constants.dart';
@@ -61,8 +60,8 @@ class AuthService {
       );
 
       return await _setLocalVariables(result);
-    } on PlatformException {
-      return 'User has cancelled or no internet!';
+      // } on PlatformException {
+      //   return 'User has cancelled or no internet!';
     } catch (e, s) {
       print('Login Uknown erorr $e, $s');
       return 'Unkown Error!';
@@ -106,6 +105,7 @@ class AuthService {
     final bool isValidResult =
         result != null && result.accessToken != null && result.idToken != null;
 
+    // print(result.accessToken);
     if (isValidResult) {
       auth0AccessToken = result.accessToken;
 
