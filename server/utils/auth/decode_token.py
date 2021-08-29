@@ -65,8 +65,6 @@ def decode_token(authorization: str):
 
     rsa_key = get_rsa_key(unverfied_header)
 
-    print(rsa_key,'<-- rsa_key')
-
     if not rsa_key:
         raise AuthenticationFailed("Unable to find the appropriate key")
 
@@ -82,7 +80,4 @@ def decode_token(authorization: str):
         raise AuthenticationFailed("The provided token has expired")
     except jwt.JWTClaimsError:
         raise AuthenticationFailed("The issuer or audience is invalid")
-    except:
-        raise AuthenticationFailed(
-            "The token could not be decoded '(validation failed)'"
-        )
+    raise AuthenticationFailed("The token could not be decoded '(validation failed)'")
