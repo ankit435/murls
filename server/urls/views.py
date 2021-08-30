@@ -7,6 +7,7 @@ from urls.serializers import UrlSerializer
 from urls.models import Url
 from urls.permissions import IsUrlOwner
 
+
 class UrlListCreateView(ListCreateAPIView):
     serializer_class = UrlSerializer
 
@@ -24,7 +25,6 @@ class UrlDetailBase(RetrieveUpdateDestroyAPIView):
     queryset = Url.objects.all()
     serializer_class = UrlSerializer
     permission_classes = [IsUrlOwner]
-
 
 
 class UrlDetailPrimaryKey(UrlDetailBase):
