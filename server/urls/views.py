@@ -46,5 +46,4 @@ class UrlTrackDetailPrimaryKey(ListAPIView):
     permission_classes = [IsUrlTrackOwner]
 
     def get_queryset(self):
-        # url = Url.objects.only("id").get(id=self.kwargs['id'])
         return UrlTrack.objects.filter(url=self.kwargs["id"]).all()

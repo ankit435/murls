@@ -9,8 +9,8 @@ redis = Redis()
 
 def redirector(request, slug):
 
-    update_url_data(request, slug)
     cached_location = redis.get(slug)
+    update_url_data(request, slug)
 
     if cached_location is not None:
         return HttpResponsePermanentRedirect(cached_location)
