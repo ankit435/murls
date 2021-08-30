@@ -40,11 +40,10 @@ def update_url_data(request: HttpRequest, slug: str):
     Thread(target=increment_url_count, kwargs={"slug": slug}, daemon=True).start()
 
 
-
-def temporary_cache_in_redis(slug:str,location:str):
+def temporary_cache_in_redis(slug: str, location: str):
     redis = Redis()
-    redis.set_with_expiry(slug,location,60*60) # cache for 1 hr
+    redis.set_with_expiry(slug, location, 60 * 60)  # cache for 1 hr
 
 
-def cache_slug_in_redis(slug:str,location:str): # configure admin
-    Thread(target=temporary_cache_in_redis,args=(slug,location),daemon=True).start()
+def cache_slug_in_redis(slug: str, location: str):  # configure admin
+    Thread(target=temporary_cache_in_redis, args=(slug, location), daemon=True).start()

@@ -18,7 +18,7 @@ def redirector(request, slug):
     try:
         found_url = Url.objects.values("location").get(slug=slug)
         location = found_url.get("location")
-        cache_slug_in_redis(slug,location)
+        cache_slug_in_redis(slug, location)
         return HttpResponsePermanentRedirect(location)
     except:
         return HttpResponsePermanentRedirect("/")
