@@ -7,13 +7,13 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('urls', '0012_urltrack'),
+        ("urls", "0012_urltrack"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='urltrack',
-            name='when',
+            model_name="urltrack",
+            name="when",
             field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]

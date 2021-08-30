@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 class Url(models.Model):
     name = models.CharField(blank=True, max_length=50)
     slug = models.CharField(blank=False, unique=True, max_length=100)
