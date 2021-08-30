@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from utils.generate_random_string import generate_random_string
-
 
 class Url(models.Model):
     name = models.CharField(blank=True, max_length=50)
@@ -15,8 +13,3 @@ class Url(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = generate_random_string()
-        super().save(*args, **kwargs)
