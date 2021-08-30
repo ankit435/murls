@@ -21,6 +21,7 @@ class UrlSerializer(ModelSerializer):
         model = Url
         fields = (
             "id",
+            "shortened",
             "name",
             "location",
             "boosted",
@@ -30,7 +31,7 @@ class UrlSerializer(ModelSerializer):
             "created_at",
             "updated_at",
         )
-        read_only_fields = ("id", "clicks", "created_at", "updated_at")
+        read_only_fields = ("id", "clicks", "created_at", "updated_at","shortened")
 
     def validate_slug(self, value: str):
         if " " in value:
