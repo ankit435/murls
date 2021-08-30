@@ -21,9 +21,10 @@ class UrlTrack(models.Model):
     ip_address = models.GenericIPAddressField()
     when = models.DateTimeField(default=timezone.now)
 
+
 class RecycleUrl(models.Model):
-    name = models.CharField(blank=True,max_length=50)
-    slug = models.CharField(blank=False,unique=True,max_length=100)
+    name = models.CharField(blank=True, max_length=50)
+    slug = models.CharField(blank=False, unique=True, max_length=100)
     shortened = models.URLField(max_length=2000)
     location = models.URLField(max_length=6000)
-    creator = models.ForeignKey(User,on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)

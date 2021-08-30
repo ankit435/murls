@@ -9,19 +9,33 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('urls', '0013_alter_urltrack_when'),
+        ("urls", "0013_alter_urltrack_when"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='RecycleUrl',
+            name="RecycleUrl",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=50)),
-                ('slug', models.CharField(max_length=100, unique=True)),
-                ('shortened', models.URLField(max_length=2000)),
-                ('location', models.URLField(max_length=6000)),
-                ('creator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=50)),
+                ("slug", models.CharField(max_length=100, unique=True)),
+                ("shortened", models.URLField(max_length=2000)),
+                ("location", models.URLField(max_length=6000)),
+                (
+                    "creator",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

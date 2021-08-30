@@ -7,7 +7,7 @@ from urls.views import (
     UrlTrackDetailPrimaryKey,
     UrlTrackGraphView,
     RecycleUrlList,
-    RecycleUrlRestore
+    RecycleUrlRestore,
 )
 
 urlpatterns = [
@@ -20,6 +20,10 @@ urlpatterns = [
         name="url-track-by-id",
     ),
     path("urls/<int:id>/graph", UrlTrackGraphView.as_view(), name="url-graph-id"),
-    path("recycled-urls",RecycleUrlList.as_view(),name="recycle-url-list"),
-    path("recycled-urls/<int:id>",RecycleUrlRestore.as_view(),name="recycle-url-restore")
+    path("recycled-urls", RecycleUrlList.as_view(), name="recycle-url-list"),
+    path(
+        "recycled-urls/<int:id>",
+        RecycleUrlRestore.as_view(),
+        name="recycle-url-restore",
+    ),
 ]
