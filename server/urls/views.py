@@ -6,7 +6,7 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     ListAPIView,
-    RetrieveAPIView,
+    RetrieveDestroyAPIView,
 )
 
 from urls.serializers import (
@@ -74,7 +74,7 @@ class RecycleUrlList(ListAPIView):
         return RecycleUrl.objects.filter(creator=self.request.user).all()
 
 
-class RecycleUrlRestore(RetrieveAPIView):
+class RecycleUrlRestore(RetrieveDestroyAPIView):
     queryset = RecycleUrl.objects.all()
     permission_classes = [IsUrlOwner]
     lookup_field = "id"
