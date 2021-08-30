@@ -1,9 +1,12 @@
 from rest_framework.serializers import (
     ModelSerializer,
     ValidationError,
+    Serializer,
     CharField as serializer_CharField,
+    IntegerField as serializer_IntegerField,
+    DateTimeField as serializer_DateTimeField,
 )
-
+from rest_framework import serializers
 from urls.models import Url, UrlTrack
 
 
@@ -40,3 +43,8 @@ class UrlTrackSerializer(ModelSerializer):
     class Meta:
         model = UrlTrack
         fields = ("id", "ip_address", "when")
+
+
+class GraphSerializer(serializers.Serializer):
+    count = serializer_IntegerField()
+    on = serializer_DateTimeField()

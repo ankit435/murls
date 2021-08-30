@@ -5,6 +5,7 @@ from urls.views import (
     UrlDetailPrimaryKey,
     UrlDetailSlug,
     UrlTrackDetailPrimaryKey,
+    UrlTrackGraphView,
 )
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     path(
         "urls/<int:id>/tracks",
         UrlTrackDetailPrimaryKey.as_view(),
-        name="url-track-by-slug",
+        name="url-track-by-id",
     ),
+    path("urls/<int:id>/graph", UrlTrackGraphView.as_view(), name="url-graph-id"),
 ]

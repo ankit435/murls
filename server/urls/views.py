@@ -8,9 +8,10 @@ from rest_framework.generics import (
     ListAPIView,
 )
 
-from urls.serializers import UrlSerializer, UrlTrackSerializer
+from urls.serializers import UrlSerializer, UrlTrackSerializer, GraphSerializer
 from urls.models import Url, UrlTrack
 from urls.permissions import IsUrlOwner, IsUrlTrackOwner
+from utils.get_graph_data import get_graph_data
 
 
 class UrlListCreateView(ListCreateAPIView):
@@ -47,3 +48,14 @@ class UrlTrackDetailPrimaryKey(ListAPIView):
 
     def get_queryset(self):
         return UrlTrack.objects.filter(url=self.kwargs["id"]).all()
+
+
+class UrlTrackGraphView(ListAPIView):
+
+    serializer_class = GraphSerializer
+    permission_classes = [IsUrlTrackOwner]
+
+    def get_queryset(self):
+        return get_graph_data(
+            self.kwargs["id"], self.request.query_params.get("filter")
+        )

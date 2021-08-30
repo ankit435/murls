@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 class Url(models.Model):
     name = models.CharField(blank=True, max_length=50)
@@ -18,4 +18,4 @@ class Url(models.Model):
 class UrlTrack(models.Model):
     url = models.ForeignKey(Url, on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField()
-    when = models.DateTimeField(auto_now=True)
+    when = models.DateTimeField(default=timezone.now)
