@@ -2,7 +2,7 @@ from django.http import HttpResponsePermanentRedirect
 
 from urls.models import Url, UrlTrack
 from utils.redis.Client import Redis
-from utils.update_url_data import update_url_data
+from utils.update_url_data import update_url_data, cache_slug_in_redis
 
 redis = Redis()
 
@@ -17,6 +17,8 @@ def redirector(request, slug):
 
     try:
         found_url = Url.objects.values("location").get(slug=slug)
-        return HttpResponsePermanentRedirect(found_url.get("location"))
+        location = found_url.get("location")
+        cache_slug_in_redis(slug, location)
+        return HttpResponsePermanentRedirect(location)
     except:
         return HttpResponsePermanentRedirect("/")

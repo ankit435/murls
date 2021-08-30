@@ -6,8 +6,8 @@ from rest_framework.serializers import (
     IntegerField as serializer_IntegerField,
     DateTimeField as serializer_DateTimeField,
 )
-from rest_framework import serializers
-from urls.models import Url, UrlTrack
+
+from urls.models import Url, UrlTrack, RecycleUrl
 
 
 def slug_validation_error():
@@ -46,6 +46,12 @@ class UrlTrackSerializer(ModelSerializer):
         fields = ("id", "ip_address", "when")
 
 
-class GraphSerializer(serializers.Serializer):
+class GraphSerializer(Serializer):
     count = serializer_IntegerField()
     on = serializer_DateTimeField()
+
+
+class RecycleUrlSerializer(ModelSerializer):
+    class Meta:
+        model = RecycleUrl
+        fields = ("id", "name", "slug", "shortened", "location")

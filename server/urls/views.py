@@ -6,10 +6,16 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     ListAPIView,
+    RetrieveDestroyAPIView,
 )
 
-from urls.serializers import UrlSerializer, UrlTrackSerializer, GraphSerializer
-from urls.models import Url, UrlTrack
+from urls.serializers import (
+    UrlSerializer,
+    UrlTrackSerializer,
+    GraphSerializer,
+    RecycleUrlSerializer,
+)
+from urls.models import Url, UrlTrack, RecycleUrl
 from urls.permissions import IsUrlOwner, IsUrlTrackOwner
 from utils.get_graph_data import get_graph_data
 
@@ -59,3 +65,31 @@ class UrlTrackGraphView(ListAPIView):
         return get_graph_data(
             self.kwargs["id"], self.request.query_params.get("filter")
         )
+
+
+class RecycleUrlList(ListAPIView):
+    serializer_class = RecycleUrlSerializer
+
+    def get_queryset(self):
+        return RecycleUrl.objects.filter(creator=self.request.user).all()
+
+
+class RecycleUrlRestore(RetrieveDestroyAPIView):
+    queryset = RecycleUrl.objects.all()
+    permission_classes = [IsUrlOwner]
+    lookup_field = "id"
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            recycled_url = RecycleUrl.objects.get(id=self.kwargs["id"])
+            Url.objects.create(
+                name=recycled_url.name,
+                slug=recycled_url.slug,
+                shortened=recycled_url.shortened,
+                location=recycled_url.location,
+                creator=recycled_url.creator,
+            )
+            recycled_url.delete()
+            return Response({"restored": True})
+        except:
+            return Response({"restored": False}, status=404)
