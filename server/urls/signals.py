@@ -10,7 +10,7 @@ redis = Redis()
 
 @receiver(pre_save, sender=Url)
 def add_slug(sender, instance, **kwargs):
-    
+
     if bool(instance.slug):
         return
 

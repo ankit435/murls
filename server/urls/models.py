@@ -13,3 +13,11 @@ class Url(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class UrlTrack(models.Model):
+    url = models.ForeignKey(Url, on_delete=models.CASCADE)
+    ip_address = models.GenericIPAddressField()
+    when = models.DateTimeField(auto_now=True)
+
+

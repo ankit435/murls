@@ -24,8 +24,7 @@ class Auth0Authentication(BaseAuthentication):
         if cached_auth_user is not None:
             return (authenticate_user(remote_user=cached_auth_user), None)
 
-        # auth_user_email = get_user(authorization_header)
-        auth_user_email = authorization_header
+        auth_user_email = get_user(authorization_header)
 
         cache_auth_user(authorization_header, auth_user_email)
 
