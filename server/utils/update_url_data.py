@@ -9,9 +9,16 @@ def add_url_track(request: HttpRequest, slug: str):
     try:
         url = QuerySet(model=Url).only("id").get(slug=slug)
 
-        QuerySet(model=UrlTrack).create(
-            url=url, ip_address=request.META.get("REMOTE_ADDR")
-        )
+        ip_address = ""
+
+        if request.META.get("REMOTE_ADDR"):
+            ip_address = request.META.get("REMOTE_ADDR")
+        else:
+            ip_address = request.META.get("HTTP_X_FORWARDED_FOR")
+
+        print("the ip was ", ip_address)
+
+        QuerySet(model=UrlTrack).create(url=url, ip_address=ip_address)
 
     except Exception as e:
         print("got the following exception in add url track", e)
