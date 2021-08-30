@@ -19,5 +19,3 @@ class UrlTrack(models.Model):
     url = models.ForeignKey(Url, on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField()
     when = models.DateTimeField(auto_now=True)
-
-

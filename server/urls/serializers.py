@@ -4,7 +4,7 @@ from rest_framework.serializers import (
     CharField as serializer_CharField,
 )
 
-from urls.models import Url
+from urls.models import Url, UrlTrack
 
 
 def slug_validation_error():
@@ -34,3 +34,9 @@ class UrlSerializer(ModelSerializer):
             slug_validation_error()
         # later add the setting from admin
         return value
+
+
+class UrlTrackSerializer(ModelSerializer):
+    class Meta:
+        model = UrlTrack
+        fields = ("id", "ip_address", "when")

@@ -7,17 +7,30 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('urls', '0011_add_url_creator'),
+        ("urls", "0011_add_url_creator"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UrlTrack',
+            name="UrlTrack",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ip_address', models.GenericIPAddressField()),
-                ('when', models.DateTimeField(auto_now=True)),
-                ('url', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='urls.url')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("ip_address", models.GenericIPAddressField()),
+                ("when", models.DateTimeField(auto_now=True)),
+                (
+                    "url",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="urls.url"
+                    ),
+                ),
             ],
         ),
     ]
