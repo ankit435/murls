@@ -38,7 +38,11 @@ def get_graph_data(url_id: int, query: str):
             QuerySet(model=UrlTrack)
             .filter(url=url_id)
             .filter(when__gte=timezone.now() - timedelta(days=7))
-            .annotate(on=TruncDay("when",))
+            .annotate(
+                on=TruncDay(
+                    "when",
+                )
+            )
             .values("on")
             .annotate(count=Count("id"))
             .all()
