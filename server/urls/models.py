@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-from utils.generate_random_string import generate_random_string
+from django.utils import timezone
 
 
 class Url(models.Model):
@@ -16,7 +15,8 @@ class Url(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = generate_random_string()
-        super().save(*args, **kwargs)
+
+class UrlTrack(models.Model):
+    url = models.ForeignKey(Url, on_delete=models.CASCADE)
+    ip_address = models.GenericIPAddressField()
+    when = models.DateTimeField(default=timezone.now)

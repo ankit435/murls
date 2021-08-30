@@ -1,19 +1,34 @@
 from threading import Thread
 from django.db.models.query import QuerySet
+from django.http import HttpRequest
 
-from urls.models import Url
+from urls.models import Url, UrlTrack
 
 
-def increment_url_count(slug: str, *args):
+def add_url_track(request: HttpRequest, slug: str):
+    try:
+        url = QuerySet(model=Url).only("id").get(slug=slug)
 
+        QuerySet(model=UrlTrack).create(
+            url=url, ip_address=request.META.get("REMOTE_ADDR")
+        )
+
+    except Exception as e:
+        print("got the following exception in add url track", e)
+        return
+
+
+def increment_url_count(slug: str):
     try:
         url = QuerySet(model=Url).get(slug=slug)
         url.clicks += 1
         url.save()
 
     except Exception as e:
+        print("got the following exception in increment url count", e)
         return
 
 
-def update_url_data(slug: str):
-    Thread(target=increment_url_count, args=(slug), daemon=True).start()
+def update_url_data(request: HttpRequest, slug: str):
+    Thread(target=add_url_track, args=(request, slug), daemon=True).start()
+    Thread(target=increment_url_count, kwargs={"slug": slug}, daemon=True).start()
