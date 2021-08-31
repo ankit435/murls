@@ -48,7 +48,6 @@ class _url_detailState extends State<url_detail> {
       context,
       listen: false,
     ).findById(urlid);
-    print(loadedUrl.Expirydatetime);
 
     DateTime? expirydate = loadedUrl.Expirydatetime != ''
         ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
