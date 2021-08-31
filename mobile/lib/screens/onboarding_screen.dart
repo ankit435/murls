@@ -11,7 +11,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 4;
+  final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
@@ -90,6 +90,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 //     ),
                 //   ),
                 // ),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   height: heights * .75,
                   child: PageView(
@@ -101,36 +104,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       });
                     },
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(heights * .04),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Center(
-                              child: FittedBox(
-                                child: Image(
-                                  image: AssetImage(
-                                    'assets/images/onboarding0.png',
-                                  ),
-                                  fit: BoxFit.cover,
-                                  height: heights / 2,
-                                  width: widths,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: heights * .02),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Connect people around the world',
-                                style: kTitleStyle,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            SizedBox(height: heights * .02),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.all(heights * .04),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: <Widget>[
+                      //       Center(
+                      //         child: FittedBox(
+                      //           child: Image(
+                      //             image: AssetImage(
+                      //               'assets/images/onboarding0.png',
+                      //             ),
+                      //             fit: BoxFit.cover,
+                      //             height: heights / 2,
+                      //             width: widths,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       SizedBox(height: heights * .02),
+                      //       Align(
+                      //         alignment: Alignment.center,
+                      //         child: Text(
+                      //           'Connect people around the world',
+                      //           style: kTitleStyle,
+                      //           textAlign: TextAlign.center,
+                      //         ),
+                      //       ),
+                      //       SizedBox(height: heights * .02),
+                      //     ],
+                      //   ),
+                      // ),
+
                       Padding(
                         padding: EdgeInsets.all(heights * .06),
                         child: Column(
@@ -140,7 +144,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: FittedBox(
                                 child: Image(
                                   image: AssetImage(
-                                    'assets/images/onboarding1.png',
+                                    'assets/images/onboarding-page1.png',
                                   ),
                                   fit: BoxFit.cover,
                                   height: heights / 2,
@@ -148,11 +152,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: heights * .02),
+                            SizedBox(height: heights * .06),
                             Align(
-                              alignment: Alignment.center,
+                              alignment: Alignment.bottomCenter,
                               child: Text(
-                                'Live your life with smarter URLS!',
+                                //'Live your life with smarter URLS!',
+                                'Welcome to Murls Mobile',
                                 style: kTitleStyle,
                                 textAlign: TextAlign.center,
                               ),
@@ -174,7 +179,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: FittedBox(
                                 child: Image(
                                   image: AssetImage(
-                                    'assets/images/onboarding2.png',
+                                    'assets/images/onboarding-page2.png',
                                   ),
                                   fit: BoxFit.cover,
                                   height: heights / 2,
@@ -182,11 +187,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: heights * .02),
+                            SizedBox(height: heights * .06),
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Get a new experience of imagination',
+                                'Free and Hostable ',
                                 style: kTitleStyle,
                                 textAlign: TextAlign.center,
                               ),

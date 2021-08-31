@@ -29,7 +29,7 @@ final kboxdecoration = BoxDecoration(
   ),
 );
 final kalaisdecor = InputDecoration(
-  hintText: 'Alias',
+  hintText: 'Name',
   filled: true,
   hoverColor: Colors.blue.shade100,
   border: OutlineInputBorder(),

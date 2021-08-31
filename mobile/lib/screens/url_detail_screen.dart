@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:murls/providers/murls_items.dart';
+import 'package:murls/screens/listed_url_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -169,8 +170,8 @@ class _url_detailState extends State<url_detail> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Expanded(
-                      child: ListTile(
-                          title: Text('Total Click', style: kappbartext))),
+                      child:
+                          ListTile(title: Text('Clicks', style: kappbartext))),
                   Expanded(
                     child: ListTile(
                       title: Text('${loadedUrl.click}', style: kappbartext),

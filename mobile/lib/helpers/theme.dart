@@ -14,7 +14,7 @@ ThemeData getTheme() {
         color: darkBrown,
         fontFamily: GoogleFonts.lacquer().fontFamily,
       ),
-      headline3: TextStyle(color: Colors.white),
+      headline3: TextStyle(color: Colors.white, fontSize: 30),
       headline4: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       headline5: TextStyle(
         color: darkBrown,

@@ -38,6 +38,7 @@ class murls_detail with ChangeNotifier {
           'location': murls.murlsUrl,
           'expiry_date': murls.Expirydatetime,
           'boosted': murls.boost,
+          'slug': murls.Alias,
         }),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',

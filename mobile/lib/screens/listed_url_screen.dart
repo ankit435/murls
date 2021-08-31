@@ -18,6 +18,8 @@ class _listed_urlState extends State<listed_url> {
   var urlsdata;
   String? filter;
   TextEditingController searchController = new TextEditingController();
+  bool picture = false;
+  bool is_searching = false;
 
   void initState() {
     searchController.addListener(() {
@@ -66,9 +68,6 @@ class _listed_urlState extends State<listed_url> {
     super.didChangeDependencies();
   }
 
-  bool picture = false;
-  bool is_searching = false;
-
   void _startAddNewUrl(BuildContext context) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -92,7 +91,7 @@ class _listed_urlState extends State<listed_url> {
     return Scaffold(
       appBar: AppBar(
         title: !is_searching
-            ? Text('All URLS')
+            ? Text('My URLS')
             : TextField(
                 style: TextStyle(color: Colors.white),
                 controller: searchController,
@@ -147,7 +146,7 @@ class _listed_urlState extends State<listed_url> {
                           children: <Widget>[
                             FittedBox(
                               child: Text(
-                                'No url is found  ?',
+                                'Mmm... It\'s empty ?',
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ),

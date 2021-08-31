@@ -17,7 +17,7 @@ class userUrl extends StatelessWidget {
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.symmetric(horizontal: 20),
         color: Colors.green,
-        child: Icon(Icons.archive_sharp, color: Colors.white, size: 32),
+        child: Icon(Icons.restore, color: Colors.white, size: 32),
       );
 
   Widget buildSwipeActionRight() => Container(
@@ -39,25 +39,26 @@ class userUrl extends StatelessWidget {
           builder: (ctx) => Card(
             color: Colors.transparent,
             child: AlertDialog(
+              backgroundColor: Colors.orange,
               clipBehavior: Clip.antiAlias,
               title: Text('Are you sure?'),
               content: Text(
                 direction == DismissDirection.startToEnd
-                    ? 'Do you want to restore the this url ?'
-                    : 'Do you want to remove the this url ?',
+                    ? 'Do you want to restore this ?'
+                    : recycled
+                        ? 'This action canot be undone !'
+                        : 'Do you want to remove this  ?',
               ),
               actions: <Widget>[
                 FlatButton(
                   child: Text('No'),
                   onPressed: () {
-                    // recycled ? null :
                     Navigator.of(ctx).pop(false);
                   },
                 ),
                 FlatButton(
                   child: Text('Yes'),
                   onPressed: () {
-                    // recycled ? null :
                     Navigator.of(ctx).pop(true);
                   },
                 ),

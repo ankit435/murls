@@ -4,6 +4,7 @@ import 'package:murls/screens/listed_url_screen.dart';
 
 import 'package:murls/Auth/services/auth_service.dart';
 import 'package:murls/Auth/models/auth0_user.dart';
+
 import 'package:murls/screens/recycle.dart';
 import '../utilities/styles.dart';
 
@@ -69,7 +70,7 @@ class AppDrawer extends StatelessWidget {
                         color: Colors.white,
                       ),
                       title: Text(
-                        'All URLS',
+                        'My URLS',
                         style: kappbartext,
                       ),
                       onTap: () {
@@ -79,22 +80,6 @@ class AppDrawer extends StatelessWidget {
                     ),
                   ),
                   Divider(),
-                  Theme(
-                    data: ThemeData(
-                      highlightColor: Colors.red,
-                    ),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.admin_panel_settings,
-                        color: Colors.white,
-                      ),
-                      title: Text('Admin page', style: kappbartext),
-                      onTap: () {
-                        // Navigator.of(context)
-                        //     .pushReplacementNamed(LoginScreen.routeName);
-                      },
-                    ),
-                  ),
                   Theme(
                     data: ThemeData(
                       highlightColor: Colors.red,
