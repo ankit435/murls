@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:murls/providers/graph_item.dart';
 import 'package:murls/screens/home.dart';
+import 'package:murls/screens/recycle.dart';
 
 import 'package:murls/widgets/graph.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +42,13 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
+          value: Graph_items(),
+        ),
+        ChangeNotifierProvider.value(
           value: murls_detail(),
+        ),
+        ChangeNotifierProvider.value(
+          value: recycle(),
         ),
       ],
       child: MaterialApp(
@@ -53,8 +61,9 @@ class _MyAppState extends State<MyApp> {
           listed_url.routeName: (ctx) => listed_url(),
           addUrls.routeName: (ctx) => addUrls(),
           url_detail.routeName: (ctx) => url_detail(),
-          BarChartSample1.routeName: (ctx) => BarChartSample1(),
+          // BarChartSample1.routeName: (ctx) => BarChartSample1(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
+          recycle_urls.routeName: (ctx) => recycle_urls(),
         },
       ),
     );

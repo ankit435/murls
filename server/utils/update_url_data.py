@@ -32,8 +32,7 @@ def increment_url_count(slug: str):
     except Exception as e:
         print("got the following exception in increment url count", e)
         return
-
-
+        
 def update_url_data(request: HttpRequest, slug: str):
     Thread(target=add_url_track, args=(request, slug), daemon=True).start()
     Thread(target=increment_url_count, kwargs={"slug": slug}, daemon=True).start()

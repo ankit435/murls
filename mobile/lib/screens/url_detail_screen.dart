@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/graph.dart';
 import 'add_new_urls.dart';
+import '../utilities/styles.dart';
 
 // ignore: camel_case_types
 class url_detail extends StatefulWidget {
@@ -54,7 +55,7 @@ class _url_detailState extends State<url_detail> {
         : null;
     DateTime createddate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
         .parse(loadedUrl.Createddatetime);
-    int end = loadedUrl.murlsUrl.length < 20 ? loadedUrl.murlsUrl.length : 40;
+    int end = loadedUrl.murlsUrl.length <= 40 ? loadedUrl.murlsUrl.length : 40;
 
     return Scaffold(
       key: key,
@@ -73,105 +74,139 @@ class _url_detailState extends State<url_detail> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        // decoration: kcontainerboxdecor,
-        child: Column(
-          children: <Widget>[
-            Container(
-              color: const Color(0xff81e5cd),
-              height: 300,
-              width: double.infinity,
-              child: BarChartSample1(),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: ListTile(title: Text('Shorten_URL'))),
-                Expanded(
-                    child: GestureDetector(
-                  child: ListTile(
-                    title: Text('https://${loadedUrl.UserURl}'),
-                  ),
-                  onLongPress: () {
-                    Clipboard.setData(
-                      new ClipboardData(text: 'https://${loadedUrl.UserURl}'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      new SnackBar(
-                        content: new Text(
-                          "Copied urls",
-                          textAlign: TextAlign.center,
-                        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                // color: const Color(0xff81e5cd),
+                height: 250,
+                width: double.infinity,
+                child: LineChartSample2(urlid: loadedUrl.Id),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child: ListTile(
+                    title: Text(
+                      'Shortened URL',
+                      style: kappbartext,
+                    ),
+                  )),
+                  Expanded(
+                      child: GestureDetector(
+                    child: ListTile(
+                      title: Text('${loadedUrl.UserURl}', style: kappbartext),
+                      trailing: Icon(
+                        Icons.copy,
+                        color: Colors.white,
                       ),
-                    );
-                  },
-                )),
-              ],
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: ListTile(title: Text('URL'))),
-                Expanded(
+                    ),
+                    onTap: () {
+                      Clipboard.setData(
+                        new ClipboardData(text: '${loadedUrl.UserURl}'),
+                      );
+
+                      ScaffoldMessenger.maybeOf(context)!.hideCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        new SnackBar(
+                          content: new Text(
+                            "Copied urls",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    },
+                  )),
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child: ListTile(title: Text('URL', style: kappbartext))),
+                  Expanded(
+                      child: ListTile(
+                          title: Text(
+                              ' ${loadedUrl.murlsUrl.substring(0, end)}',
+                              style: kappbartext)))
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child: ListTile(
+                          title: Text('Created Date', style: kappbartext))),
+                  Expanded(
+                      child: ListTile(
+                          title: Text(
+                              ' ${DateFormat.yMd().format(createddate)}',
+                              style: kappbartext)))
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child: ListTile(
+                          title: Text('Expiry Date', style: kappbartext))),
+                  Expanded(
+                      child: ListTile(
+                          title: Text(
+                              expirydate != null
+                                  ? '${DateFormat.yMd().format(expirydate)}'
+                                  : 'no expiry date',
+                              style: kappbartext)))
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child: ListTile(
+                          title: Text('Total Click', style: kappbartext))),
+                  Expanded(
                     child: ListTile(
-                        title:
-                            Text(' ${loadedUrl.murlsUrl.substring(0, end)}')))
-              ],
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: ListTile(title: Text('Created Date'))),
-                Expanded(
+                      title: Text('${loadedUrl.click}', style: kappbartext),
+                    ),
+                  )
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      child:
+                          ListTile(title: Text('BOOST', style: kappbartext))),
+                  Expanded(
                     child: ListTile(
-                        title:
-                            Text(' ${DateFormat.yMd().format(createddate)}')))
-              ],
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: ListTile(title: Text('Expiry Date'))),
-                Expanded(
-                    child: ListTile(
-                        title: Text(expirydate != null
-                            ? '${DateFormat.yMd().format(expirydate)}'
-                            : 'no expiry date')))
-              ],
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: ListTile(title: Text('Total Click'))),
-                Expanded(
-                  child: ListTile(
-                    title: Text('${loadedUrl.click}'),
-                  ),
-                )
-              ],
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: ListTile(title: Text('BOOST'))),
-                Expanded(
-                  child: ListTile(
-                    title: Text(loadedUrl.boost
-                        ? 'your url is boosted'
-                        : 'your url not is boosted'),
-                    trailing: loadedUrl.boost
-                        ? Icon(Icons.bolt)
-                        : Icon(Icons.cable_rounded),
-                  ),
-                )
-              ],
-            ),
-          ],
+                      title: Text(
+                          loadedUrl.boost
+                              ? 'your url is boosted'
+                              : 'your url not is boosted',
+                          style: kappbartext),
+                      trailing: loadedUrl.boost
+                          ? Icon(
+                              Icons.bolt,
+                              color: Colors.white,
+                            )
+                          : Icon(
+                              Icons.cable_rounded,
+                              color: Colors.white,
+                            ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
