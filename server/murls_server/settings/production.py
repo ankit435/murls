@@ -1,12 +1,14 @@
 from os import getenv
 
 from utils.base_url import get_base_url_host
-from .base import BASE_DIR
+from .base import BASE_DIR, REST_FRAMEWORK, INSTALLED_APPS
 
 DEBUG = False
 
 ALLOWED_HOST = get_base_url_host()
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", ALLOWED_HOST]
+
+INSTALLED_APPS.pop(INSTALLED_APPS.index("django.contrib.staticfiles"))
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
@@ -21,9 +23,7 @@ DATABASES = {
     }
 }
 
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
-}
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ("rest_framework.renderers.JSONRenderer",)
 
 CSRF_COOKIE_SECURE = True
 

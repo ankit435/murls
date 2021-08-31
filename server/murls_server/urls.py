@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.urls import path, include
 
-from utils.errors.not_found import Page_Not_Found
-
 urlpatterns = [
     path("", include("redirector.urls")),
     path("_/", include("urls.urls")),
 ]
 
-handler404 = Page_Not_Found
+handler404 = "utils.errors.not_found.Page_Not_Found"

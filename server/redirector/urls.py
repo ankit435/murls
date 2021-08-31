@@ -1,5 +1,5 @@
 from django.urls import path
 
-from redirector.views import Redirector
+from redirector.views import redirector
 
-urlpatterns = [path("<str:slug>", Redirector.as_view(), name="main-redirector")]
+urlpatterns = [path("<str:slug>", redirector, name="main-redirector")]

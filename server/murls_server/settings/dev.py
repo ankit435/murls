@@ -6,8 +6,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "cc9a-2405-201-a003-c1ae-d980-c3d2-3126-9dc9.ngrok.io",
-    "ad5e-2405-201-a003-c1ae-bd13-72b4-86a3-4026.ngrok.io",
+    "695e-2405-201-a003-c1ae-3d41-5632-c8c7-f95.ngrok.io"
 ]
 
 SECRET_KEY = "django-insecure-r^_0hj4#ekqyqkx^muo@ls(8+91125b@38p9dz1a!ec7yko49v"
