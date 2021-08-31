@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class Url(models.Model):
-    name = models.CharField(blank=True, max_length=50)
+    name = models.CharField(blank=True, default=" ", max_length=50)
     slug = models.CharField(blank=False, unique=True, max_length=100)
     shortened = models.URLField(max_length=2000)
     location = models.URLField(max_length=6000)
