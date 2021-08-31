@@ -32,5 +32,8 @@
     "vite": "^2.4.3",
     "webext-bridge": "^4.0.0",
     "webextension-polyfill-ts": "^0.26.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3"
   }
 }

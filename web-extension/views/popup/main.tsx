@@ -1,16 +1,31 @@
 import { render } from "preact";
 import { browser } from "webextension-polyfill-ts";
+import {Button,Box,TextField,createStyles,makeStyles} from '@material-ui/core'
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    input: {
+      display: 'none',
+    },
+  }),
+);
 
 const NewTab = () => {
+  const classes = useStyles();
+  
   const openOptionPage = () => {
     browser.runtime.openOptionsPage();
   };
   return (
-    <div className="container">
-      <h1>Hello Preact World</h1>
-      <p>Welcome to popup</p>
-      <button onClick={openOptionPage}>Open Option</button>
-    </div>
+    <Box className={classes.root}>
+      <TextField label="Enter Alias" variant="outlined" />
+      <Button color="primary" variant="contained" onClick={openOptionPage}>Murl It!</Button>
+    </Box>
   );
 };
 
