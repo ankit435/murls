@@ -2,7 +2,6 @@ from threading import Thread
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 
-from utils.redis.Client import Redis
 from urls.models import Url, UrlTrack
 
 
@@ -37,13 +36,3 @@ def increment_url_count(slug: str):
 def update_url_data(request: HttpRequest, slug: str):
     Thread(target=add_url_track, args=(request, slug), daemon=True).start()
     Thread(target=increment_url_count, kwargs={"slug": slug}, daemon=True).start()
-    
-
-
-def temporary_cache_in_redis(slug: str, location: str):
-    redis = Redis()
-    redis.set_with_expiry(slug, location, 10 * 60)  # cache for 10 minutes
-
-
-def cache_slug_in_redis(slug: str, location: str):  # configure admin
-    Thread(target=temporary_cache_in_redis, args=(slug, location), daemon=True).start()

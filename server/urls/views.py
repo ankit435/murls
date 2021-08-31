@@ -24,7 +24,7 @@ class UrlListCreateView(ListCreateAPIView):
     serializer_class = UrlSerializer
 
     def get_queryset(self):
-        return Url.objects.filter(creator=self.request.user).all()
+        return Url.objects.filter(creator=self.request.user).order_by("-pk").all()
 
     def perform_create(self, serializer):
         try:
@@ -71,7 +71,9 @@ class RecycleUrlList(ListAPIView):
     serializer_class = RecycleUrlSerializer
 
     def get_queryset(self):
-        return RecycleUrl.objects.filter(creator=self.request.user).all()
+        return (
+            RecycleUrl.objects.filter(creator=self.request.user).order_by("-pk").all()
+        )
 
 
 class RecycleUrlRestore(RetrieveDestroyAPIView):
