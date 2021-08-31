@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 
 from urls.models import Url, UrlTrack
 from utils.redis.Client import Redis
-from utils.update_url_data import update_url_data, cache_slug_in_redis
+from utils.update_url_data import update_url_data
 
 redis = Redis()
 
@@ -18,7 +18,6 @@ def redirector(request, slug):
     try:
         found_url = Url.objects.values("location").get(slug=slug)
         location = found_url.get("location")
-        cache_slug_in_redis(slug, location)
         return HttpResponseRedirect(location)
     except:
         return HttpResponseRedirect("/")
