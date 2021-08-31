@@ -20,7 +20,7 @@ ThemeData getTheme() {
         color: darkBrown,
         fontFamily: GoogleFonts.lacquer().fontFamily,
       ),
-      headline6: TextStyle(color: darkBrown),
+      headline6: TextStyle(color: Colors.white),
     ),
     scaffoldBackgroundColor: Color(0xFF2D2F41),
     fontFamily: GoogleFonts.lato().fontFamily,

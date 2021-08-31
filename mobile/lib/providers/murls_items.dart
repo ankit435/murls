@@ -45,7 +45,6 @@ class murls_detail with ChangeNotifier {
         },
       );
 
-      print(murls.Expirydatetime);
       if (response.statusCode == 201) {
         final newURls = Murls(
           Alias: murls.Alias,
@@ -84,8 +83,6 @@ class murls_detail with ChangeNotifier {
       final extractedData = json.decode(response.body);
 
       final List<Murls> loadedUrls = [];
-      print(extractedData);
-      print('hi');
 
       if (extractedData == null) {
         return;

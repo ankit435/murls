@@ -62,7 +62,7 @@ final kurlsdecor = InputDecoration(
 );
 
 final kelevated = ElevatedButton.styleFrom(
-  primary: Colors.brown,
+  primary: Colors.orange,
   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
   textStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
 );

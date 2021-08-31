@@ -43,18 +43,12 @@ class Graph_items with ChangeNotifier {
     if (extractedGraph == null) {
       return;
     }
-    print(extractedGraph);
+
     for (var urlsData in extractedGraph) {
       loadedgraph
           .add(Graph_item(count: urlsData['count'], date: urlsData['on']));
     }
     _graph_details = loadedgraph.toList();
     notifyListeners();
-
-    // final String s =
-    //     '${DateFormat.E().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(_graph_details[0].date))}';
-    // print(s);
   }
-  // catch (error) {
-  //   throw (error);
 }
