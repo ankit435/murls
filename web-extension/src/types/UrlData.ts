@@ -10,3 +10,9 @@ export type UrlDataType = {
     created_at: string;
     updated_at: string;
 };
+
+
+export type AddUrlDataType = Pick<
+    UrlDataType,
+    "slug" | "location" | "boosted" | "expiry_date"
+>;

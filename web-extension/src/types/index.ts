@@ -1,1 +1,1 @@
-export { UrlDataType } from "./UrlData";
+export { UrlDataType, AddUrlDataType } from "./UrlData";
