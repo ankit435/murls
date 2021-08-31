@@ -13,7 +13,7 @@ import {
     Typography,
 } from "@material-ui/core";
 
-import { fetchAllUrls } from "../../src/utils/fetchData";
+import { fetchAllUrls, deleteUrl } from "../../src/utils/fetchData";
 import { UrlDataType } from "../../src/types/index";
 
 export default function AllUrlsList() {
@@ -26,6 +26,13 @@ export default function AllUrlsList() {
             setUrlDatas(fetchedData);
         });
     }, []);
+
+    const handleDeleteUrl = async (id: number) => {
+        const deleteSuccess = await deleteUrl(id);
+        if (deleteSuccess) {
+            setUrlDatas((prevState) => prevState.filter((u) => u.id !== id));
+        }
+    };
 
     const listItems = urlDatas.map((urlData) => (
         <ListItem button key={urlData.id}>
@@ -45,7 +52,11 @@ export default function AllUrlsList() {
                 <Typography variant="caption">{urlData.slug}</Typography>
             </ListItemText>
             <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete">
+                <IconButton
+                    onClick={() => handleDeleteUrl(urlData.id)}
+                    edge="end"
+                    aria-label="delete"
+                >
                     <CgTrashEmpty />
                 </IconButton>
             </ListItemSecondaryAction>

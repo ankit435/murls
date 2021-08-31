@@ -26,3 +26,10 @@ export async function postUrl(data: AddUrlDataType) {
             detail: "Please recheck your network connection!",
         }));
 }
+
+export async function deleteUrl(id: number) {
+    return fetcher
+        .delete("/_/urls/" + id)
+        .then((response) => true)
+        .catch((_e) => false);
+}
