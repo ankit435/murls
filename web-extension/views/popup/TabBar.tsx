@@ -32,12 +32,14 @@ interface ITabBarProps {
     allUrls: JSX.Element;
     addUrls: JSX.Element;
     recycleUrls: JSX.Element;
+    myAccount: JSX.Element;
 }
 
 export default function TabBar({
     addUrls,
     allUrls,
     recycleUrls,
+    myAccount,
 }: ITabBarProps) {
     const [tabBarIndex, setTabBarIndex] = useState(0);
 
@@ -71,7 +73,7 @@ export default function TabBar({
                 {recycleUrls}
             </TabPanel>
             <TabPanel value={tabBarIndex} index={3}>
-                Item Four
+                {myAccount}
             </TabPanel>
         </>
     );

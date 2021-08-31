@@ -5,6 +5,7 @@ import TabBar from "./TabBar";
 import AllUrls from "./AllUrls";
 import AddUrl from "./AddUrl";
 import Recyles from "./RecycledUrls";
+import MyAccount from "./MyAccount";
 
 const NewTab = () => {
     return (
@@ -14,6 +15,7 @@ const NewTab = () => {
                 allUrls={<AllUrls />}
                 addUrls={<AddUrl />}
                 recycleUrls={<Recyles />}
+                myAccount={<MyAccount />}
             />
         </Box>
     );
