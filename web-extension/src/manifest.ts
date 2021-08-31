@@ -12,11 +12,6 @@ export async function getManifest(): Promise<Manifest.WebExtensionManifest> {
       default_icon: './assets/icon-512.png',
       default_popup: './dist/popup/index.html',
     },
-    options_ui: {
-      page: './dist/options/index.html',
-      open_in_tab: true,
-      chrome_style: false,
-    },
     background: {
       scripts: ['./dist/background/index.global.js'],
       persistent: false,
