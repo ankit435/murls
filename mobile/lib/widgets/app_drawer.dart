@@ -4,6 +4,8 @@ import 'package:murls/screens/listed_url_screen.dart';
 
 import 'package:murls/Auth/services/auth_service.dart';
 import 'package:murls/Auth/models/auth0_user.dart';
+import 'package:murls/screens/recycle.dart';
+import '../utilities/styles.dart';
 
 Auth0User? profile = AuthService.instance.profile;
 
@@ -34,7 +36,6 @@ class AppDrawer extends StatelessWidget {
         : Container(
             width: 20,
             height: 20,
-            //  color: Colors.brown,
             child: Center(
               child: Text('${profile?.name[0].toUpperCase()}'),
             ),
@@ -44,72 +45,101 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                AppBar(
-                  //  leading: Icon(Icons.account_circle),
-                  leading: _avatar(profile),
-                  title: Text('${profile?.name.toUpperCase()}'),
-                  automaticallyImplyLeading: false,
-                ),
-                Divider(),
-                Theme(
-                  data: ThemeData(
-                    highlightColor: Colors.red,
+      child: Container(
+        color: Color(0xFF242634),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  AppBar(
+                    //  leading: Icon(Icons.account_circle),
+                    leading: _avatar(profile),
+                    title: Text('${profile?.name.toUpperCase()}'),
+                    automaticallyImplyLeading: false,
                   ),
-                  child: ListTile(
-                    leading: Icon(Icons.list),
-                    title: Text('All URLS'),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(listed_url.routeName);
-                    },
+                  Divider(),
+                  Theme(
+                    data: ThemeData(
+                      highlightColor: Colors.red,
+                    ),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.list,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'All URLS',
+                        style: kappbartext,
+                      ),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(listed_url.routeName);
+                      },
+                    ),
                   ),
-                ),
-                Divider(),
-                Theme(
-                  data: ThemeData(
-                    highlightColor: Colors.red,
+                  Divider(),
+                  Theme(
+                    data: ThemeData(
+                      highlightColor: Colors.red,
+                    ),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.admin_panel_settings,
+                        color: Colors.white,
+                      ),
+                      title: Text('Admin page', style: kappbartext),
+                      onTap: () {
+                        // Navigator.of(context)
+                        //     .pushReplacementNamed(LoginScreen.routeName);
+                      },
+                    ),
                   ),
-                  child: ListTile(
-                    leading: Icon(Icons.admin_panel_settings),
-                    title: Text('Admin page'),
-                    onTap: () {
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(LoginScreen.routeName);
-                    },
+                  Theme(
+                    data: ThemeData(
+                      highlightColor: Colors.red,
+                    ),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                      title: Text('Recycle', style: kappbartext),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(recycle_urls.routeName);
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Divider(),
-          Container(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                  ),
-                  title: Text(
-                    'Log Out',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () async {
-                    await AuthService.instance.logout();
-                    Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routeName);
-                  },
-                ),
+                ],
               ),
             ),
-          )
-        ],
+            Divider(),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      'Log Out',
+                      style: kappbartext,
+                    ),
+                    onTap: () async {
+                      await AuthService.instance.logout();
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeScreen.routeName);
+                    },
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

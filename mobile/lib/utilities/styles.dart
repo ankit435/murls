@@ -23,15 +23,9 @@ final klabelStyle =
     TextStyle(color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold);
 final kboxdecoration = BoxDecoration(
   gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [
-      Color(0xff73Aef5),
-      Color(0xff61A4F1),
-      Color(0xff478DE0),
-      Color(0xff398Ae5),
-    ],
-    stops: [0.1, 0.4, 0.7, 0.9],
+    colors: [Color(0xFF61A3FE), Color(0xFF63FFD5)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
   ),
 );
 final kalaisdecor = InputDecoration(
@@ -56,6 +50,9 @@ final kcontainerboxdecor = BoxDecoration(
     stops: [0.1, 0.4, 0.7, 0.9],
   ),
 );
+
+final kappbartext =
+    TextStyle(color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.bold);
 
 final kurlsdecor = InputDecoration(
   hintText: 'Urls',

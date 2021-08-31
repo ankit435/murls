@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:murls/Auth/models/auth0_user.dart';
-import 'package:murls/Auth/services/auth_service.dart';
 import 'package:murls/providers/murls_items.dart';
 import '../widgets/user_urls_item.dart';
 import 'package:provider/provider.dart';
@@ -68,8 +66,6 @@ class _listed_urlState extends State<listed_url> {
     super.didChangeDependencies();
   }
 
-  Auth0User? profile = AuthService.instance.profile;
-
   bool picture = false;
   bool is_searching = false;
 
@@ -98,9 +94,16 @@ class _listed_urlState extends State<listed_url> {
         title: !is_searching
             ? Text('All URLS')
             : TextField(
+                style: TextStyle(color: Colors.white),
                 controller: searchController,
                 decoration: InputDecoration(
-                    hintText: 'Search', icon: Icon(Icons.search)),
+                  hintText: 'Search',
+                  hintStyle: TextStyle(color: Colors.white),
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
               ),
         actions: <Widget>[
           is_searching
@@ -129,26 +132,37 @@ class _listed_urlState extends State<listed_url> {
           : Container(
               height: double.infinity,
               width: double.infinity,
+              // decoration: BoxDecoration(
+              //   gradient: LinearGradient(
+              //     colors: [Color(0xFF61A3FE), Color(0xFF63FFD5)],
+              //     begin: Alignment.centerLeft,
+              //     end: Alignment.centerRight,
+              //   ),
+              // ),
               child: urlsdata.items.isEmpty
                   ? LayoutBuilder(
                       builder: (ctx, constraints) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              'No url is found  ?',
-                              style: Theme.of(context).textTheme.headline3,
+                            FittedBox(
+                              child: Text(
+                                'No url is found  ?',
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
                             ),
                             SizedBox(
                               height: 40,
                             ),
                             Container(
-                              height: constraints.maxHeight * .6,
-                              child: Image.asset(
-                                'assets/images/waiting.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                height: constraints.maxHeight * .6,
+                                width: MediaQuery.of(context).size.width,
+                                child: FittedBox(
+                                  child: Image.asset(
+                                    'assets/images/nourl.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                )),
                           ],
                         );
                       },
@@ -162,11 +176,11 @@ class _listed_urlState extends State<listed_url> {
                               ? Column(
                                   children: [
                                     userUrl(
-                                      urlsdata.items[i].Alias,
-                                      urlsdata.items[i].Id,
-                                      urlsdata.items[i].boost,
-                                    ),
-                                    Divider(),
+                                        urlsdata.items[i].Alias,
+                                        urlsdata.items[i].Id,
+                                        urlsdata.items[i].boost,
+                                        false),
+                                    //  Divider(),
                                   ],
                                 )
                               : '${urlsdata.items[i].Alias}'
@@ -178,8 +192,9 @@ class _listed_urlState extends State<listed_url> {
                                           urlsdata.items[i].Alias,
                                           urlsdata.items[i].Id,
                                           urlsdata.items[i].boost,
+                                          false,
                                         ),
-                                        Divider(),
+                                        // Divider(),
                                       ],
                                     )
                                   : new Container();
