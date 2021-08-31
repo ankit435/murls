@@ -30,9 +30,10 @@ function a11yProps(index: number) {
 
 interface ITabBarProps {
     allUrls: JSX.Element;
+    addUrls: JSX.Element;
 }
 
-export default function TabBar({ allUrls }: ITabBarProps) {
+export default function TabBar({ addUrls, allUrls }: ITabBarProps) {
     const [tabBarIndex, setTabBarIndex] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -41,7 +42,7 @@ export default function TabBar({ allUrls }: ITabBarProps) {
 
     return (
         <>
-            <AppBar position="static" color="default">
+            <AppBar position="static" color="primary">
                 <Tabs
                     value={tabBarIndex}
                     onChange={handleChange}
@@ -56,7 +57,7 @@ export default function TabBar({ allUrls }: ITabBarProps) {
                 </Tabs>
             </AppBar>
             <TabPanel value={tabBarIndex} index={0}>
-                Item One
+                {addUrls}
             </TabPanel>
             <TabPanel value={tabBarIndex} index={1}>
                 {allUrls}

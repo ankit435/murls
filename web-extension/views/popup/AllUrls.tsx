@@ -4,14 +4,14 @@ import {
     List,
     ListItem,
     ListItemText,
-    CircularProgress,
+    LinearProgress,
 } from "@material-ui/core";
 
 import { fetchAllUrls } from "../../src/utils/fetchData";
-import { urlDataType } from "../../src/types/index";
+import { UrlDataType } from "../../src/types/index";
 
 export default function AllUrlsList() {
-    const [urlDatas, setUrlDatas] = useState<urlDataType[]>([]);
+    const [urlDatas, setUrlDatas] = useState<UrlDataType[]>([]);
     const [isLoading, setLoaded] = useState(true);
 
     useEffect(() => {
@@ -36,7 +36,9 @@ export default function AllUrlsList() {
     return (
         <Box>
             {isLoading ? (
-                <CircularProgress color="secondary" />
+                <Box margin="1rem 0">
+                    <LinearProgress color="secondary" />
+                </Box>
             ) : (
                 <List component="nav" aria-label="all murl urls">
                     {listItems}

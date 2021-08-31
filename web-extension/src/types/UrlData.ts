@@ -1,4 +1,4 @@
-export type urlDataType = {
+export type UrlDataType = {
     id: number;
     shortened: string;
     name: string;
