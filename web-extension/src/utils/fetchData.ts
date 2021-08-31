@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { UrlDataType, AddUrlDataType } from "../types";
+import { UrlDataType, AddUrlDataType, RecyledUrlDataType } from "../types";
 
 const fetcher = axios.create({
     baseURL: "http://localhost:9000",
@@ -30,6 +30,27 @@ export async function postUrl(data: AddUrlDataType) {
 export async function deleteUrl(id: number) {
     return fetcher
         .delete("/_/urls/" + id)
+        .then((response) => true)
+        .catch((_e) => false);
+}
+
+export async function fetchRecyledUrls(): Promise<Array<RecyledUrlDataType>> {
+    return fetcher
+        .get("/_/recycled-urls")
+        .then((response) => response.data)
+        .catch((_e) => []);
+}
+
+export async function deleteRecyledUrl(id: number) {
+    return fetcher
+        .delete("/_/recycled-urls/" + id)
+        .then((response) => true)
+        .catch((_e) => false);
+}
+
+export async function restoreRecyledUrl(id: number) {
+    return fetcher
+        .get("/_/recycled-urls/" + id)
         .then((response) => true)
         .catch((_e) => false);
 }

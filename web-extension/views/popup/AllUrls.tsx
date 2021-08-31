@@ -4,6 +4,7 @@ import { CgTrashEmpty } from "react-icons/cg";
 import {
     Box,
     IconButton,
+    Paper,
     List,
     ListItem,
     ListItemSecondaryAction,
@@ -35,32 +36,34 @@ export default function AllUrlsList() {
     };
 
     const listItems = urlDatas.map((urlData) => (
-        <ListItem button key={urlData.id}>
-            <ListItemIcon>
-                {urlData.boosted ? (
-                    <IoRocket color="red" />
-                ) : (
-                    <IoRocketOutline />
-                )}
-            </ListItemIcon>
-            <ListItemText>
-                <Typography variant="subtitle1">
-                    {urlData.location.length > 25
-                        ? urlData.location.slice(0, 25) + "..."
-                        : urlData.location}
-                </Typography>
-                <Typography variant="caption">{urlData.slug}</Typography>
-            </ListItemText>
-            <ListItemSecondaryAction>
-                <IconButton
-                    onClick={() => handleDeleteUrl(urlData.id)}
-                    edge="end"
-                    aria-label="delete"
-                >
-                    <CgTrashEmpty />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
+        <Paper elevation={1} style={{margin:"0.25rem"}} key={urlData.id}>
+            <ListItem button >
+                <ListItemIcon>
+                    {urlData.boosted ? (
+                        <IoRocket color="red" />
+                    ) : (
+                        <IoRocketOutline />
+                    )}
+                </ListItemIcon>
+                <ListItemText>
+                    <Typography variant="subtitle1">
+                        {urlData.location.length > 25
+                            ? urlData.location.slice(0, 25) + "..."
+                            : urlData.location}
+                    </Typography>
+                    <Typography variant="caption">{urlData.slug}</Typography>
+                </ListItemText>
+                <ListItemSecondaryAction>
+                    <IconButton
+                        onClick={() => handleDeleteUrl(urlData.id)}
+                        edge="end"
+                        aria-label="delete"
+                    >
+                        <CgTrashEmpty />
+                    </IconButton>
+                </ListItemSecondaryAction>
+            </ListItem>
+        </Paper>
     ));
 
     return (

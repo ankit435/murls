@@ -31,9 +31,14 @@ function a11yProps(index: number) {
 interface ITabBarProps {
     allUrls: JSX.Element;
     addUrls: JSX.Element;
+    recycleUrls: JSX.Element;
 }
 
-export default function TabBar({ addUrls, allUrls }: ITabBarProps) {
+export default function TabBar({
+    addUrls,
+    allUrls,
+    recycleUrls,
+}: ITabBarProps) {
     const [tabBarIndex, setTabBarIndex] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -63,7 +68,7 @@ export default function TabBar({ addUrls, allUrls }: ITabBarProps) {
                 {allUrls}
             </TabPanel>
             <TabPanel value={tabBarIndex} index={2}>
-                Item Three
+                {recycleUrls}
             </TabPanel>
             <TabPanel value={tabBarIndex} index={3}>
                 Item Four

@@ -11,8 +11,12 @@ export type UrlDataType = {
     updated_at: string;
 };
 
-
 export type AddUrlDataType = Pick<
     UrlDataType,
     "slug" | "location" | "boosted" | "expiry_date"
+>;
+
+export type RecyledUrlDataType = Omit<
+    UrlDataType,
+    "boosted" | "clicks" | "expiry_date" | "created_at" | "updated_at"
 >;
