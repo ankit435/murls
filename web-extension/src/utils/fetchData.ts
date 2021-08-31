@@ -1,9 +1,10 @@
 import axios from "axios";
 
 import { UrlDataType, AddUrlDataType, RecyledUrlDataType } from "../types";
+import { getBaseUrl } from "./getConfig";
 
 const fetcher = axios.create({
-    baseURL: "http://localhost:9000",
+    baseURL: getBaseUrl(),
     timeout: 5000,
     headers: { Authorization: "blue" },
 });
