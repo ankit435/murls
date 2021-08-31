@@ -54,7 +54,7 @@ class _recycle_urlsState extends State<recycle_urls> {
     final urlsdata = Provider.of<recycle>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recycle url'),
+        title: Text('Recycles'),
       ),
       drawer: AppDrawer(),
       body: _isLoading
@@ -68,20 +68,14 @@ class _recycle_urlsState extends State<recycle_urls> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            FittedBox(
-                              child: Text(
-                                'No trash is found  ?',
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-                            ),
                             SizedBox(
-                              height: 40,
+                              height: 30,
                             ),
                             Container(
                                 height: constraints.maxHeight * .6,
                                 child: FittedBox(
                                   child: Image.asset(
-                                    'assets/images/trash.png',
+                                    'assets/images/recyle-empty.png',
                                     fit: BoxFit.cover,
                                   ),
                                 )),

@@ -91,7 +91,7 @@ class _listed_urlState extends State<listed_url> {
     return Scaffold(
       appBar: AppBar(
         title: !is_searching
-            ? Text('My URLS')
+            ? Text('My URLs')
             : TextField(
                 style: TextStyle(color: Colors.white),
                 controller: searchController,

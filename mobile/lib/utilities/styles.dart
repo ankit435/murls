@@ -29,7 +29,7 @@ final kboxdecoration = BoxDecoration(
   ),
 );
 final kalaisdecor = InputDecoration(
-  hintText: 'Name',
+  hintText: 'Alias',
   filled: true,
   hoverColor: Colors.blue.shade100,
   border: OutlineInputBorder(),
@@ -55,7 +55,7 @@ final kappbartext =
     TextStyle(color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.bold);
 
 final kurlsdecor = InputDecoration(
-  hintText: 'Urls',
+  hintText: 'Url',
   filled: true,
   hoverColor: Colors.blue.shade100,
   border: OutlineInputBorder(),

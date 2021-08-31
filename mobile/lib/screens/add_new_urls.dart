@@ -164,7 +164,7 @@ class _addUrlsState extends State<addUrls> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[200],
+      backgroundColor: Colors.white,
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -184,7 +184,7 @@ class _addUrlsState extends State<addUrls> {
                         child: Column(
                           children: <Widget>[
                             SizedBox(
-                              height: 10,
+                              height: 15,
                             ),
                             TextFormField(
                               initialValue: _initValues['Alias'],
@@ -218,7 +218,7 @@ class _addUrlsState extends State<addUrls> {
                               },
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 15,
                             ),
                             TextFormField(
                               // initialValue: _initValues['murlsUrl'],
