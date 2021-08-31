@@ -1,342 +1,456 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'dart:async';
-import 'dart:math';
-import 'package:flutter/gestures.dart';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:murls/providers/graph_item.dart';
+import 'package:provider/provider.dart';
 
-class BarChartSample1 extends StatefulWidget {
-  final List<Color> availableColors = [
-    Colors.purpleAccent,
-    Colors.yellow,
-    Colors.lightBlue,
-    Colors.orange,
-    Colors.pink,
-    Colors.redAccent,
-  ];
-  static const routeName = '/graph-Detail';
-
+class LineChartSample2 extends StatefulWidget {
+  final String? urlid;
+  const LineChartSample2({Key? key, this.urlid}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  _LineChartSample2State createState() => _LineChartSample2State();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
-  final Color barBackgroundColor = const Color(0xff72d8bf);
-  final Duration animDuration = const Duration(milliseconds: 250);
+class _LineChartSample2State extends State<LineChartSample2> {
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
+  var _isLoading = false;
+  bool showAvg = false;
 
-  int touchedIndex = -1;
-
-  bool isPlaying = false;
+  void initState() {
+    final urlid = widget.urlid == null ? '' : widget.urlid;
+    Future.delayed(Duration.zero).then((_) async {
+      setState(() {
+        _isLoading = true;
+      });
+      await Provider.of<Graph_items>(context, listen: false)
+          .fetchAndSetGraph(urlid!);
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        color: const Color(0xff81e5cd),
-        child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Text(
-                    'GRAPH',
-                    style: TextStyle(
-                        color: const Color(0xff0f4a3c),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    'GRAPH',
-                    style: TextStyle(
-                        color: const Color(0xff379982),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 38,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: BarChart(
-                        isPlaying ? randomData() : mainBarData(),
-                        swapAnimationDuration: animDuration,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(
-                    isPlaying ? Icons.pause : Icons.play_arrow,
-                    color: const Color(0xff0f4a3c),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isPlaying = !isPlaying;
-                      if (isPlaying) {
-                        refreshState();
-                      }
-                    });
-                  },
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+    final graphData = Provider.of<Graph_items>(context);
 
-  BarChartGroupData makeGroupData(
-    int x,
-    double y, {
-    bool isTouched = false,
-    Color barColor = Colors.white,
-    double width = 22,
-    List<int> showTooltips = const [],
-  }) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          y: isTouched ? y + 1 : y,
-          colors: isTouched ? [Colors.yellow] : [barColor],
-          width: width,
-          backDrawRodData: BackgroundBarChartRodData(
-            show: true,
-            y: 20,
-            colors: [barBackgroundColor],
+    return Stack(
+      children: <Widget>[
+        AspectRatio(
+            aspectRatio: 1.70,
+            child: graphData.items.length <= 6
+                ? new Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Minimum 7 days clicks required to generate graph",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                : _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(18),
+                          ),
+                          color: Color(0xFF2D2F41),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 18.0, left: 12.0, top: 24, bottom: 12),
+                          child: LineChart(
+                            showAvg
+                                ? LineChartData(
+                                    lineTouchData:
+                                        LineTouchData(enabled: false),
+                                    gridData: FlGridData(
+                                      show: true,
+                                      drawHorizontalLine: true,
+                                      getDrawingVerticalLine: (value) {
+                                        return FlLine(
+                                          color: const Color(0xff37434d),
+                                          strokeWidth: 1,
+                                        );
+                                      },
+                                      getDrawingHorizontalLine: (value) {
+                                        return FlLine(
+                                          color: const Color(0xff37434d),
+                                          strokeWidth: 1,
+                                        );
+                                      },
+                                    ),
+                                    titlesData: FlTitlesData(
+                                      show: true,
+                                      bottomTitles: SideTitles(
+                                        showTitles: true,
+                                        reservedSize: 22,
+                                        getTextStyles: (context, value) =>
+                                            const TextStyle(
+                                                color: Color(0xff68737d),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                        getTitles: (value) {
+                                          switch (value.toInt()) {
+                                            case 0:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[0].date))}';
+                                            case 1:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[1].date))}';
+                                            case 2:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[2].date))}';
+                                            case 3:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[3].date))}';
+                                            case 4:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[4].date))}';
+                                            case 5:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[5].date))}';
+                                            case 6:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[6].date))}';
+                                          }
+                                          return '';
+                                        },
+                                        margin: 8,
+                                        interval: 1,
+                                      ),
+                                      leftTitles: SideTitles(
+                                        showTitles: true,
+                                        getTextStyles: (context, value) =>
+                                            const TextStyle(
+                                          color: Color(0xff67727d),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                        getTitles: (value) {
+                                          switch (value.toInt()) {
+                                            case 1:
+                                              return '100';
+                                            case 3:
+                                              return '300';
+                                            case 5:
+                                              return '500';
+                                          }
+                                          return '';
+                                        },
+                                        reservedSize: 32,
+                                        interval: 1,
+                                        margin: 12,
+                                      ),
+                                      topTitles: SideTitles(showTitles: false),
+                                      rightTitles:
+                                          SideTitles(showTitles: false),
+                                    ),
+                                    borderData: FlBorderData(
+                                        show: true,
+                                        border: Border.all(
+                                            color: const Color(0xff37434d),
+                                            width: 1)),
+                                    minX: 0,
+                                    maxX: 6,
+                                    minY: 0,
+                                    maxY: 6,
+                                    lineBarsData: [
+                                      LineChartBarData(
+                                        spots: [
+                                          FlSpot(
+                                              0,
+                                              graphData.items[0].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[0].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              1,
+                                              graphData.items[1].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[1].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              2,
+                                              graphData.items[2].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[2].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              3,
+                                              graphData.items[3].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[3].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              4,
+                                              graphData.items[4].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[4].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              5,
+                                              graphData.items[5].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[5].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              6,
+                                              graphData.items[6].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[6].count
+                                                          .toDouble() /
+                                                      10),
+                                        ],
+                                        isCurved: true,
+                                        colors: [
+                                          ColorTween(
+                                                  begin: gradientColors[0],
+                                                  end: gradientColors[1])
+                                              .lerp(0.2)!,
+                                          ColorTween(
+                                                  begin: gradientColors[0],
+                                                  end: gradientColors[1])
+                                              .lerp(0.2)!,
+                                        ],
+                                        barWidth: 5,
+                                        isStrokeCapRound: true,
+                                        dotData: FlDotData(
+                                          show: false,
+                                        ),
+                                        belowBarData:
+                                            BarAreaData(show: true, colors: [
+                                          ColorTween(
+                                                  begin: gradientColors[0],
+                                                  end: gradientColors[1])
+                                              .lerp(0.2)!
+                                              .withOpacity(0.1),
+                                          ColorTween(
+                                                  begin: gradientColors[0],
+                                                  end: gradientColors[1])
+                                              .lerp(0.2)!
+                                              .withOpacity(0.1),
+                                        ]),
+                                      ),
+                                    ],
+                                  )
+                                : LineChartData(
+                                    gridData: FlGridData(
+                                      show: true,
+                                      drawVerticalLine: true,
+                                      getDrawingHorizontalLine: (value) {
+                                        return FlLine(
+                                          color: const Color(0xff37434d),
+                                          strokeWidth: 1,
+                                        );
+                                      },
+                                      getDrawingVerticalLine: (value) {
+                                        return FlLine(
+                                          color: const Color(0xff37434d),
+                                          strokeWidth: 1,
+                                        );
+                                      },
+                                    ),
+                                    titlesData: FlTitlesData(
+                                      show: true,
+                                      rightTitles:
+                                          SideTitles(showTitles: false),
+                                      topTitles: SideTitles(showTitles: false),
+                                      bottomTitles: SideTitles(
+                                        showTitles: true,
+                                        reservedSize: 22,
+                                        interval: 1,
+                                        getTextStyles: (context, value) =>
+                                            const TextStyle(
+                                                color: Color(0xff68737d),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                        getTitles: (value) {
+                                          switch (value.toInt()) {
+                                            case 0:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[0].date))}';
+                                            case 1:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[1].date))}';
+                                            case 2:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[2].date))}';
+                                            case 3:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[3].date))}';
+                                            case 4:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[4].date))}';
+                                            case 5:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[5].date))}';
+                                            case 6:
+                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[6].date))}';
+                                          }
+                                          return '';
+                                        },
+                                        margin: 8,
+                                      ),
+                                      leftTitles: SideTitles(
+                                        showTitles: true,
+                                        interval: 1,
+                                        getTextStyles: (context, value) =>
+                                            const TextStyle(
+                                          color: Color(0xff67727d),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                        getTitles: (value) {
+                                          switch (value.toInt()) {
+                                            case 1:
+                                              return '10';
+                                            case 3:
+                                              return '300';
+                                            case 5:
+                                              return '500';
+                                          }
+                                          return '';
+                                        },
+                                        reservedSize: 32,
+                                        margin: 12,
+                                      ),
+                                    ),
+                                    borderData: FlBorderData(
+                                        show: true,
+                                        border: Border.all(
+                                            color: const Color(0xff37434d),
+                                            width: 1)),
+                                    minX: 0,
+                                    maxX: 6,
+                                    minY: 0,
+                                    maxY: 6,
+                                    lineBarsData: [
+                                      LineChartBarData(
+                                        spots: [
+                                          FlSpot(
+                                              0,
+                                              graphData.items[0].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[0].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              1,
+                                              graphData.items[1].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[1].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              2,
+                                              graphData.items[2].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[2].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              3,
+                                              graphData.items[3].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[3].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              4,
+                                              graphData.items[4].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[4].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              5,
+                                              graphData.items[5].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[5].count
+                                                          .toDouble() /
+                                                      10),
+                                          FlSpot(
+                                              6,
+                                              graphData.items[6].count
+                                                          .toDouble() ==
+                                                      null
+                                                  ? 0
+                                                  : graphData.items[6].count
+                                                          .toDouble() /
+                                                      10),
+                                        ],
+                                        isCurved: true,
+                                        colors: gradientColors,
+                                        barWidth: 5,
+                                        isStrokeCapRound: true,
+                                        dotData: FlDotData(
+                                          show: false,
+                                        ),
+                                        belowBarData: BarAreaData(
+                                          show: true,
+                                          colors: gradientColors
+                                              .map((color) =>
+                                                  color.withOpacity(0.3))
+                                              .toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                      )),
+        SizedBox(
+          width: 60,
+          height: 34,
+          child: TextButton(
+            onPressed: () {
+              setState(() {
+                showAvg = !showAvg;
+              });
+            },
+            child: Text(
+              'avg',
+              style: TextStyle(
+                  fontSize: 12,
+                  color:
+                      showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
+            ),
           ),
         ),
       ],
-      showingTooltipIndicators: showTooltips,
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, 7, isTouched: i == touchedIndex);
-          case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
-          case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
-          case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
-          case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
-          case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
-          case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
-          default:
-            return throw Error();
-        }
-      });
+  // LineChartData mainData() {
+  //   return;
+  // }
 
-  BarChartData mainBarData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.blueGrey,
-            getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              String weekDay;
-              switch (group.x.toInt()) {
-                case 0:
-                  weekDay = 'Monday';
-                  break;
-                case 1:
-                  weekDay = 'Tuesday';
-                  break;
-                case 2:
-                  weekDay = 'Wednesday';
-                  break;
-                case 3:
-                  weekDay = 'Thursday';
-                  break;
-                case 4:
-                  weekDay = 'Friday';
-                  break;
-                case 5:
-                  weekDay = 'Saturday';
-                  break;
-                case 6:
-                  weekDay = 'Sunday';
-                  break;
-                default:
-                  throw Error();
-              }
-              return BarTooltipItem(
-                weekDay + '\n',
-                TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: (rod.y - 1).toString(),
-                    style: TextStyle(
-                      color: Colors.yellow,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              );
-            }),
-        touchCallback: (barTouchResponse) {
-          setState(() {
-            if (barTouchResponse.spot != null &&
-                barTouchResponse.touchInput is! PointerUpEvent &&
-                barTouchResponse.touchInput is! PointerExitEvent) {
-              touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
-            } else {
-              touchedIndex = -1;
-            }
-          });
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-          margin: 16,
-          getTitles: (double value) {
-            switch (value.toInt()) {
-              case 0:
-                return 'M';
-              case 1:
-                return 'T';
-              case 2:
-                return 'W';
-              case 3:
-                return 'T';
-              case 4:
-                return 'F';
-              case 5:
-                return 'S';
-              case 6:
-                return 'S';
-              default:
-                return '';
-            }
-          },
-        ),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: showingGroups(),
-    );
-  }
-
-  BarChartData randomData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        enabled: false,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-          margin: 16,
-          getTitles: (double value) {
-            switch (value.toInt()) {
-              case 0:
-                return 'M';
-              case 1:
-                return 'T';
-              case 2:
-                return 'W';
-              case 3:
-                return 'T';
-              case 4:
-                return 'F';
-              case 5:
-                return 'S';
-              case 6:
-                return 'S';
-              default:
-                return '';
-            }
-          },
-        ),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 1:
-            return makeGroupData(1, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 2:
-            return makeGroupData(2, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 3:
-            return makeGroupData(3, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 4:
-            return makeGroupData(4, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 5:
-            return makeGroupData(5, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          case 6:
-            return makeGroupData(6, Random().nextInt(15).toDouble() + 6,
-                barColor: widget.availableColors[
-                    Random().nextInt(widget.availableColors.length)]);
-          default:
-            return throw Error();
-        }
-      }),
-    );
-  }
-
-  Future<dynamic> refreshState() async {
-    setState(() {});
-    await Future<dynamic>.delayed(
-        animDuration + const Duration(milliseconds: 50));
-    if (isPlaying) {
-      await refreshState();
-    }
-  }
+  // LineChartData avgData() {
+  //   return;
+  // }
 }

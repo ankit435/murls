@@ -15,15 +15,14 @@ ThemeData getTheme() {
         fontFamily: GoogleFonts.lacquer().fontFamily,
       ),
       headline3: TextStyle(color: Colors.white),
-      headline4: TextStyle(color: darkBrown, fontWeight: FontWeight.bold),
+      headline4: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       headline5: TextStyle(
         color: darkBrown,
         fontFamily: GoogleFonts.lacquer().fontFamily,
       ),
       headline6: TextStyle(color: darkBrown),
-     
     ),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Color(0xFF2D2F41),
     fontFamily: GoogleFonts.lato().fontFamily,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -42,13 +41,13 @@ ThemeData getTheme() {
       ),
     ),
     appBarTheme: AppBarTheme(
-      iconTheme: IconThemeData(color: Colors.brown),
+      iconTheme: IconThemeData(color: Colors.white),
       color: Colors.transparent,
       elevation: 0.0,
       centerTitle: true,
       textTheme: TextTheme(
         headline6: TextStyle(
-            color: darkBrown, fontSize: 20, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
     ),
   );
