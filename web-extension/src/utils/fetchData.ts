@@ -21,7 +21,7 @@ export async function fetchAllUrls(): Promise<Array<UrlDataType>> {
 
 export async function postUrl(data: AddUrlDataType) {
     return fetcher
-        .post("/_/urls", data)
+        .post("/_/urls", { ...data, name: data.slug })
         .then((response) => response.data)
         .catch((_e) => ({
             detail: "Please recheck your network connection!",
