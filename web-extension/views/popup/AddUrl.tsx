@@ -15,7 +15,7 @@ import {
 import { IoRocket, IoRocketOutline } from "react-icons/io5";
 
 import { AddUrlDataType } from "../../src/types";
-import { postUrl } from "../../src/utils/postUrl";
+import { postUrl } from "../../src/utils/fetchData";
 
 const useStyles = makeStyles((theme) => ({
     formContainer: {

@@ -1,10 +1,16 @@
 import { useEffect, useState } from "preact/hooks";
+import { IoRocket, IoRocketOutline } from "react-icons/io5";
+import { CgTrashEmpty } from "react-icons/cg";
 import {
     Box,
+    IconButton,
     List,
     ListItem,
+    ListItemSecondaryAction,
     ListItemText,
     LinearProgress,
+    ListItemIcon,
+    Typography,
 } from "@material-ui/core";
 
 import { fetchAllUrls } from "../../src/utils/fetchData";
@@ -23,13 +29,26 @@ export default function AllUrlsList() {
 
     const listItems = urlDatas.map((urlData) => (
         <ListItem button key={urlData.id}>
-            <ListItemText
-                primary={
-                    urlData.location.length !== 0
-                        ? urlData.location
-                        : urlData.slug
-                }
-            />
+            <ListItemIcon>
+                {urlData.boosted ? (
+                    <IoRocket color="red" />
+                ) : (
+                    <IoRocketOutline />
+                )}
+            </ListItemIcon>
+            <ListItemText>
+                <Typography variant="subtitle1">
+                    {urlData.location.length > 25
+                        ? urlData.location.slice(0, 25) + "..."
+                        : urlData.location}
+                </Typography>
+                <Typography variant="caption">{urlData.slug}</Typography>
+            </ListItemText>
+            <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="delete">
+                    <CgTrashEmpty />
+                </IconButton>
+            </ListItemSecondaryAction>
         </ListItem>
     ));
 
