@@ -11,5 +11,5 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         User = get_user_model()
         blue_user = User.objects.get(username="blue")
-        a = QuerySet(model=Url).get(slug=murls)
+        a = QuerySet(model=Url).get(slug="murls")
         print("a = ",a)
