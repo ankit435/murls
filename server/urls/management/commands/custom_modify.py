@@ -11,6 +11,5 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         User = get_user_model()
         blue_user = User.objects.get(username="blue")
-        QuerySet(model=Url).filter(creator=blue_user).filter(id__gt=144).delete()
-        QuerySet(model=RecycleUrl).filter(creator=blue_user).delete()
-        self.stdout.write("Deleteing those entries")
+        a = QuerySet(model=Url).get(slug=murls)
+        print("a = ",a)
