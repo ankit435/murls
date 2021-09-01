@@ -1,5 +1,5 @@
 import { browser } from "webextension-polyfill-ts";
-
+import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "preact/hooks";
 import {
     makeStyles,
@@ -68,6 +68,7 @@ interface IAddUrlProps {
 
 export default function AddUrl(edit: IAddUrlProps = { id: undefined }) {
     const classes = useStyles();
+    const { getAccessTokenSilently } = useAuth0();
 
     const [addingUrl, setAddingUrl] = useState<AddUrlDataType>({
         location: "",
@@ -85,7 +86,8 @@ export default function AddUrl(edit: IAddUrlProps = { id: undefined }) {
     );
 
     const submitAddingUrl = async () => {
-        const result = await postUrl(addingUrl);
+        const token = await getAccessTokenSilently();
+        const result = await postUrl(token, addingUrl);
         setHasSubmitted({ data: result });
     };
 
