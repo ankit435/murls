@@ -14,7 +14,7 @@ class Redis:
         )
         self.r = new_redis_client
 
-    def get(self, key: str) -> Union[str, None]:
+    def get(self, key: str) -> Union[bytes, None]:
         return self.r.get(key)
 
     def set(self, key: str, value: Union[int, str]):

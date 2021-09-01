@@ -7,7 +7,6 @@ AUTH0_DOMAIN = getenv("AUTHO_DOMAIN", "murls1.jp.auth0.com")
 
 
 def get_user(auth: str):
-    print("auth = ", auth)
     try:
         current_request = request.Request(
             "https://" + AUTH0_DOMAIN + "/userinfo",
