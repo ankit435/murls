@@ -13,7 +13,7 @@ def redirector(request, slug):
     update_url_data(request, slug)
 
     if cached_location is not None:
-        return HttpResponseRedirect(cached_location.decode('utf-8'))
+        return HttpResponseRedirect(cached_location)
 
     try:
         found_url = Url.objects.values("location").get(slug=slug)
