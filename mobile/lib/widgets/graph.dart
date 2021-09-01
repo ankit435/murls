@@ -132,7 +132,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                             case 3:
                                               return '500';
                                             case 5:
-                                              return '1000';
+                                              return '1k';
                                           }
                                           return '';
                                         },

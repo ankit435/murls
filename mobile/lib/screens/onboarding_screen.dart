@@ -90,12 +90,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 //     ),
                 //   ),
                 // ),
-<<<<<<< HEAD
                 SizedBox(
                   height: 20,
                 ),
-=======
->>>>>>> 3ef9ff93bcae616a8a21232ce64ae77e3e8eb881
                 Container(
                   height: heights * .75,
                   child: PageView(

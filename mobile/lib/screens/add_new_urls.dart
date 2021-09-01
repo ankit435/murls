@@ -164,11 +164,7 @@ class _addUrlsState extends State<addUrls> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       backgroundColor: Colors.white,
-=======
-      backgroundColor: Colors.teal[200],
->>>>>>> 3ef9ff93bcae616a8a21232ce64ae77e3e8eb881
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
