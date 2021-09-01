@@ -11,5 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         User = get_user_model()
         blue_user = User.objects.get(username="blue")
-        a = QuerySet(model=Url).create(boosted=True,slug="murls",creator=blue_user)
+        a = QuerySet(model=Url).get(slug="murls",creator=blue_user)
+        a.location = "https://murls.hashnode.dev/introducing-murls-the-advanced-url-re-director"
+        a.save()
         print("a = ",a)
