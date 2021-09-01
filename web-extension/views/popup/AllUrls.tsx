@@ -13,6 +13,7 @@ import {
     ListItemIcon,
     Typography,
 } from "@material-ui/core";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { fetchAllUrls, deleteUrl } from "../../src/utils/fetchData";
 import { UrlDataType } from "../../src/types/index";
@@ -20,24 +21,29 @@ import { UrlDataType } from "../../src/types/index";
 export default function AllUrlsList() {
     const [urlDatas, setUrlDatas] = useState<UrlDataType[]>([]);
     const [isLoading, setLoaded] = useState(true);
+    const { getAccessTokenSilently } = useAuth0();
 
     useEffect(() => {
-        fetchAllUrls().then((fetchedData) => {
+        const performFetch = async () =>{
+            const token = await getAccessTokenSilently();
+            const fetchedData = await fetchAllUrls(token)
             setLoaded(false);
             setUrlDatas(fetchedData);
-        });
+        }
+        performFetch()
     }, []);
 
     const handleDeleteUrl = async (id: number) => {
-        const deleteSuccess = await deleteUrl(id);
+        const token = await getAccessTokenSilently();
+        const deleteSuccess = await deleteUrl(token, id);
         if (deleteSuccess) {
             setUrlDatas((prevState) => prevState.filter((u) => u.id !== id));
         }
     };
 
     const listItems = urlDatas.map((urlData) => (
-        <Paper elevation={1} style={{margin:"0.25rem"}} key={urlData.id}>
-            <ListItem button >
+        <Paper elevation={1} style={{ margin: "0.25rem" }} key={urlData.id}>
+            <ListItem button>
                 <ListItemIcon>
                     {urlData.boosted ? (
                         <IoRocket color="red" />

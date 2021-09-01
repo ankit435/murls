@@ -24,7 +24,10 @@ class UrlListCreateView(ListCreateAPIView):
     serializer_class = UrlSerializer
 
     def get_queryset(self):
-        return Url.objects.filter(creator=self.request.user).order_by("-pk").all()
+        print('the user = ',self.request.user)
+        urls = Url.objects.filter(creator=self.request.user).order_by("-pk").all()
+        print('the urls are = ',urls)
+        return urls
 
     def perform_create(self, serializer):
         try:

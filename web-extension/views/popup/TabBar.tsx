@@ -1,5 +1,6 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { AppBar, Tabs, Tab } from "@material-ui/core";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -32,18 +33,42 @@ interface ITabBarProps {
     allUrls: JSX.Element;
     addUrls: JSX.Element;
     recycleUrls: JSX.Element;
+    myAccount: JSX.Element;
 }
 
 export default function TabBar({
     addUrls,
     allUrls,
     recycleUrls,
+    myAccount,
 }: ITabBarProps) {
     const [tabBarIndex, setTabBarIndex] = useState(0);
+    const [disabled, setDisabled] = useState(false);
+    const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTabBarIndex(newValue);
     };
+
+    useEffect(() => {
+        const loginInAfterPopup = async () => {
+            const token = await getAccessTokenSilently();
+            if (token && token.length > 0) {
+                setDisabled(false);
+                setTabBarIndex((prevState) =>
+                    prevState === 3 ? 0 : prevState
+                );
+            }
+        };
+        loginInAfterPopup();
+    }, []);
+
+    useEffect(() => {
+        if (!isLoading && !isAuthenticated) {
+            setDisabled(true);
+            setTabBarIndex(3);
+        }
+    }, [isLoading, isAuthenticated]);
 
     return (
         <>
@@ -55,9 +80,17 @@ export default function TabBar({
                     variant="fullWidth"
                     scrollButtons="auto"
                 >
-                    <Tab label="New" {...a11yProps(0)} />
-                    <Tab label="My URLs" {...a11yProps(1)} />
-                    <Tab label="Recyled" {...a11yProps(2)} />
+                    <Tab disabled={disabled} label="New" {...a11yProps(0)} />
+                    <Tab
+                        disabled={disabled}
+                        label="My URLs"
+                        {...a11yProps(1)}
+                    />
+                    <Tab
+                        disabled={disabled}
+                        label="Recyled"
+                        {...a11yProps(2)}
+                    />
                     <Tab label="My Account" {...a11yProps(3)} />
                 </Tabs>
             </AppBar>
@@ -71,7 +104,7 @@ export default function TabBar({
                 {recycleUrls}
             </TabPanel>
             <TabPanel value={tabBarIndex} index={3}>
-                Item Four
+                {myAccount}
             </TabPanel>
         </>
     );

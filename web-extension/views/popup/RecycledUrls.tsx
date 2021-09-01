@@ -12,6 +12,7 @@ import {
     LinearProgress,
     Typography,
 } from "@material-ui/core";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
     fetchRecyledUrls,
@@ -23,23 +24,29 @@ import { RecyledUrlDataType } from "../../src/types/index";
 export default function AllRecycles() {
     const [recycles, setRecyles] = useState<RecyledUrlDataType[]>([]);
     const [isLoading, setLoaded] = useState(true);
+    const { getAccessTokenSilently } = useAuth0();
 
     useEffect(() => {
-        fetchRecyledUrls().then((fetchedData) => {
+        const performFetch = async () => {
+            const token = await getAccessTokenSilently();
+            const fetchedData = await fetchRecyledUrls(token);
             setLoaded(false);
             setRecyles(fetchedData);
-        });
+        };
+        performFetch();
     }, []);
 
     const restoreRecyle = async (id: number) => {
-        const restoreSuccess = await restoreRecyledUrl(id);
+        const token = await getAccessTokenSilently();
+        const restoreSuccess = await restoreRecyledUrl(token, id);
         if (restoreSuccess) {
             setRecyles((prevState) => prevState.filter((r) => r.id !== id));
         }
     };
 
     const handlePermanentDeleteRecyle = async (id: number) => {
-        const deleteSuccess = await deleteRecyledUrl(id);
+        const token = await getAccessTokenSilently();
+        const deleteSuccess = await deleteRecyledUrl(token, id);
         if (deleteSuccess) {
             setRecyles((prevState) => prevState.filter((r) => r.id !== id));
         }

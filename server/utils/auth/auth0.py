@@ -15,14 +15,11 @@ class Auth0Authentication(BaseAuthentication):
         authorization_header = request.headers.get("Authorization")
         if not authorization_header:
             return None
-        if authorization_header == "blue":
-            user = authenticate_user(remote_user="blue")
-            return (user, None)
 
         cached_auth_user = redis.get(authorization_header)
 
         if cached_auth_user is not None:
-            return (authenticate_user(remote_user=cached_auth_user), None)
+            return (authenticate_user(remote_user=cached_auth_user.decode('utf-8')), None)
 
         auth_user_email = get_user(authorization_header)
 
