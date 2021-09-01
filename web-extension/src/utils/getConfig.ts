@@ -1,5 +1,5 @@
 export function getBaseUrl() {
-    return "http://localhost:9000";
+    return "http://52.226.16.59";
 }
 
 export function getAuth0Config() {
