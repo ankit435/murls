@@ -157,68 +157,47 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                       LineChartBarData(
                                         spots: [
                                           FlSpot(
-                                              0,
+                                              graphData.items[0].date
+                                                  .toDouble(),
                                               graphData.items[0].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[0].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                           FlSpot(
-                                              1,
+                                              graphData.items[1].date
+                                                  .toDouble(),
                                               graphData.items[1].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[1].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                           FlSpot(
-                                              2,
+                                              graphData.items[2].date
+                                                  .toDouble(),
                                               graphData.items[2].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[2].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                           FlSpot(
-                                              3,
+                                              graphData.items[3].date
+                                                  .toDouble(),
                                               graphData.items[3].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[3].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                           FlSpot(
-                                              4,
+                                              graphData.items[4].date
+                                                  .toDouble(),
                                               graphData.items[4].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[4].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                           FlSpot(
-                                              5,
+                                              graphData.items[5].date
+                                                  .toDouble(),
                                               graphData.items[5].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[5].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                           FlSpot(
-                                              6,
+                                              graphData.items[6].date
+                                                  .toDouble(),
                                               graphData.items[6].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[6].count
-                                                          .toDouble() /
-                                                      100),
+                                                      .toDouble() /
+                                                  100),
                                         ],
                                         isCurved: true,
                                         colors: [
@@ -341,68 +320,47 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                       LineChartBarData(
                                         spots: [
                                           FlSpot(
-                                              0,
+                                              graphData.items[0].date
+                                                  .toDouble(),
                                               graphData.items[0].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[0].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                           FlSpot(
-                                              1,
+                                              graphData.items[1].date
+                                                  .toDouble(),
                                               graphData.items[1].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[1].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                           FlSpot(
-                                              2,
+                                              graphData.items[2].date
+                                                  .toDouble(),
                                               graphData.items[2].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[2].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                           FlSpot(
-                                              3,
+                                              graphData.items[3].date
+                                                  .toDouble(),
                                               graphData.items[3].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[3].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                           FlSpot(
-                                              4,
+                                              graphData.items[4].date
+                                                  .toDouble(),
                                               graphData.items[4].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[4].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                           FlSpot(
-                                              5,
+                                              graphData.items[5].date
+                                                  .toDouble(),
                                               graphData.items[5].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[5].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                           FlSpot(
-                                              6,
+                                              graphData.items[6].date
+                                                  .toDouble(),
                                               graphData.items[6].count
-                                                          .toDouble() ==
-                                                      null
-                                                  ? 0
-                                                  : graphData.items[6].count
-                                                          .toDouble() /
-                                                      10),
+                                                      .toDouble() /
+                                                  10),
                                         ],
                                         isCurved: true,
                                         colors: gradientColors,

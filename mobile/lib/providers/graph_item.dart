@@ -7,7 +7,7 @@ import 'package:murls/Auth/services/auth_service.dart';
 
 class Graph_item {
   final int count;
-  final String date;
+  final int date;
 
   Graph_item({
     required this.count,
@@ -18,76 +18,19 @@ class Graph_item {
 //const consturl = "https://695e-2405-201-a003-c1ae-3d41-5632-c8c7-f95.ngrok.io";
 const consturl = 'http://52.226.16.59';
 
-class Graph_items with ChangeNotifier {
-  List<Graph_item> _graph_details = [];
-
-  List<Graph_item> get items {
-    return _graph_details;
-  }
-
-  Future<void> fetchAndSetGraph(String id) async {
-    //final url = 'GET /_/urls/$id/graph';
-    final url = '$consturl/_/urls/$id/graph?filter=7 days';
-
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        "Accept": 'application/json; charset=UTF-8',
-        'Authorization': '${AuthService.instance.auth0AccessToken}',
-      },
-    );
-
-    final List<Graph_item> loadedgraph = [];
-
-    final extractedGraph = json.decode(response.body);
-    if (extractedGraph == null) {
-      return;
-    }
-    print(extractedGraph);
-
-    for (var urlsData in extractedGraph) {
-      loadedgraph
-          .add(Graph_item(count: urlsData['count'], date: urlsData['on']));
-    }
-    _graph_details = loadedgraph.toList();
-    notifyListeners();
-  }
-}
-
 DateTime now = DateTime.now();
 int currentDay = now.weekday;
 DateTime firstDayOfWeek = now.subtract(Duration(days: currentDay + 3));
 
 class Graph_value with ChangeNotifier {
   List<Graph_item> graph = [
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay + 3)).toIso8601String()}'),
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay + 2)).toIso8601String()}'),
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay + 1)).toIso8601String()}'),
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay + 0)).toIso8601String()}'),
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay - 1)).toIso8601String()}'),
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay - 2)).toIso8601String()}'),
-    Graph_item(
-        count: 0,
-        date:
-            '${now.subtract(Duration(days: currentDay - 3)).toIso8601String()}'),
+    Graph_item(count: 0, date: 0),
+    Graph_item(count: 0, date: 1),
+    Graph_item(count: 0, date: 2),
+    Graph_item(count: 0, date: 3),
+    Graph_item(count: 0, date: 4),
+    Graph_item(count: 0, date: 5),
+    Graph_item(count: 0, date: 6),
   ];
 
   List<Graph_item> get items {
@@ -114,8 +57,47 @@ class Graph_value with ChangeNotifier {
     }
     int i = 0;
     for (var urlsData in extractedGraph) {
-      graph[i] = Graph_item(count: urlsData['count'], date: urlsData['on']);
-      i++;
+      String d = DateFormat.E()
+          .format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(urlsData['on']));
+
+      switch (d) {
+        case 'Sun':
+          {
+            i = 0;
+          }
+          break;
+        case 'Mon':
+          {
+            i = 1;
+          }
+          break;
+        case 'Tue':
+          {
+            i = 2;
+          }
+          break;
+        case 'Wed':
+          {
+            i = 3;
+          }
+          break;
+        case 'Thu':
+          {
+            i = 4;
+          }
+          break;
+        case 'Fri':
+          {
+            i = 5;
+          }
+          break;
+        case 'Sat':
+          {
+            i = 6;
+          }
+      }
+
+      graph[i] = Graph_item(count: urlsData['count'], date: i);
     }
   }
 }

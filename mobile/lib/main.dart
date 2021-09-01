@@ -42,9 +42,6 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Graph_items(),
-        ),
-        ChangeNotifierProvider.value(
           value: Graph_value(),
         ),
         ChangeNotifierProvider.value(
