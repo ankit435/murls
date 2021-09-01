@@ -8,4 +8,4 @@ def generate_random_string(string_length=6) -> str:
     random_string = ""
     for _ in range(string_length):
         random_string = random_string + random.choice(alpha_numerals)
-    return random_string
+    return random_string.lower()

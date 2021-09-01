@@ -45,6 +45,9 @@ class _MyAppState extends State<MyApp> {
           value: Graph_items(),
         ),
         ChangeNotifierProvider.value(
+          value: Graph_value(),
+        ),
+        ChangeNotifierProvider.value(
           value: murls_detail(),
         ),
         ChangeNotifierProvider.value(

@@ -25,7 +25,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       setState(() {
         _isLoading = true;
       });
-      await Provider.of<Graph_items>(context, listen: false)
+      await Provider.of<Graph_value>(context, listen: false)
           .fetchAndSetGraph(urlid!);
       setState(() {
         _isLoading = false;
@@ -36,7 +36,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
   @override
   Widget build(BuildContext context) {
-    final graphData = Provider.of<Graph_items>(context);
+    final graphData = Provider.of<Graph_value>(context);
 
     return Stack(
       children: <Widget>[
@@ -98,19 +98,19 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                         getTitles: (value) {
                                           switch (value.toInt()) {
                                             case 0:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[0].date))}';
+                                              return 'SUN';
                                             case 1:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[1].date))}';
+                                              return 'MON';
                                             case 2:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[2].date))}';
+                                              return 'TUE';
                                             case 3:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[3].date))}';
+                                              return 'WED';
                                             case 4:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[4].date))}';
+                                              return 'THU';
                                             case 5:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[5].date))}';
+                                              return 'FRI';
                                             case 6:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[6].date))}';
+                                              return 'SAT';
                                           }
                                           return '';
                                         },
@@ -130,9 +130,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                             case 1:
                                               return '100';
                                             case 3:
-                                              return '300';
-                                            case 5:
                                               return '500';
+                                            case 5:
+                                              return '1000';
                                           }
                                           return '';
                                         },
@@ -164,7 +164,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[0].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                           FlSpot(
                                               1,
                                               graphData.items[1].count
@@ -173,7 +173,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[1].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                           FlSpot(
                                               2,
                                               graphData.items[2].count
@@ -182,7 +182,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[2].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                           FlSpot(
                                               3,
                                               graphData.items[3].count
@@ -191,7 +191,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[3].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                           FlSpot(
                                               4,
                                               graphData.items[4].count
@@ -200,7 +200,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[4].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                           FlSpot(
                                               5,
                                               graphData.items[5].count
@@ -209,7 +209,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[5].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                           FlSpot(
                                               6,
                                               graphData.items[6].count
@@ -218,7 +218,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                                   ? 0
                                                   : graphData.items[6].count
                                                           .toDouble() /
-                                                      10),
+                                                      100),
                                         ],
                                         isCurved: true,
                                         colors: [
@@ -286,19 +286,19 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                         getTitles: (value) {
                                           switch (value.toInt()) {
                                             case 0:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[0].date))}';
+                                              return 'SUN';
                                             case 1:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[1].date))}';
+                                              return 'MON';
                                             case 2:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[2].date))}';
+                                              return 'TUE';
                                             case 3:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[3].date))}';
+                                              return 'WED';
                                             case 4:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[4].date))}';
+                                              return 'THU';
                                             case 5:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[5].date))}';
+                                              return 'FRI';
                                             case 6:
-                                              return '${DateFormat.d().format(DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(graphData.items[6].date))}';
+                                              return 'SAT';
                                           }
                                           return '';
                                         },
@@ -318,9 +318,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
                                             case 1:
                                               return '10';
                                             case 3:
-                                              return '300';
+                                              return '50';
                                             case 5:
-                                              return '500';
+                                              return '100';
                                           }
                                           return '';
                                         },

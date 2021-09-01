@@ -11,7 +11,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 3;
+  final int _numPages = 4;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
@@ -90,9 +90,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 //     ),
                 //   ),
                 // ),
+<<<<<<< HEAD
                 SizedBox(
                   height: 20,
                 ),
+=======
+>>>>>>> 3ef9ff93bcae616a8a21232ce64ae77e3e8eb881
                 Container(
                   height: heights * .75,
                   child: PageView(
@@ -163,10 +166,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ),
                             SizedBox(height: heights * .02),
-                            // Text(
-                            //   'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                            //   style: kSubtitleStyle,
-                            // ),
                           ],
                         ),
                       ),
@@ -197,6 +196,88 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ),
                             SizedBox(height: heights * .02),
+                            // Text(
+                            //   'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                            //   style: kSubtitleStyle,
+                            // ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(heights * .03),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: FittedBox(
+                                // child: Image(
+                                //   image: AssetImage(
+                                //     'assets/images/logo.svg',
+                                //   ),
+                                child: SvgPicture.asset(
+                                  "assets/images/logo.svg",
+                                  fit: BoxFit.cover,
+                                  height: 150,
+                                  width: 150,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 80,
+                            ),
+                            Center(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  textStyle: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                child: Text(
+                                  'JOIN YOUR OWN SERVER',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            Center(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  textStyle: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                child: Text(
+                                  'JOIN YOUR OPEN MURLS SERVER',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                onPressed: () {
+                                  _storeOnboardInfo();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
+                                },
+                              ),
+                            )
+                            // SizedBox(height: heights * .02),
+                            // Align(
+                            //   alignment: Alignment.center,
+                            //   child: Text(
+                            //     'Get a new experience of imagination',
+                            //     style: kTitleStyle,
+                            //     textAlign: TextAlign.center,
+                            //   ),
+                            // ),
+                            // SizedBox(height: heights * .02),
                             // Text(
                             //   'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
                             //   style: kSubtitleStyle,

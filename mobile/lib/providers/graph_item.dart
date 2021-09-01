@@ -43,6 +43,7 @@ class Graph_items with ChangeNotifier {
     if (extractedGraph == null) {
       return;
     }
+    print(extractedGraph);
 
     for (var urlsData in extractedGraph) {
       loadedgraph
@@ -50,5 +51,71 @@ class Graph_items with ChangeNotifier {
     }
     _graph_details = loadedgraph.toList();
     notifyListeners();
+  }
+}
+
+DateTime now = DateTime.now();
+int currentDay = now.weekday;
+DateTime firstDayOfWeek = now.subtract(Duration(days: currentDay + 3));
+
+class Graph_value with ChangeNotifier {
+  List<Graph_item> graph = [
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay + 3)).toIso8601String()}'),
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay + 2)).toIso8601String()}'),
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay + 1)).toIso8601String()}'),
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay + 0)).toIso8601String()}'),
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay - 1)).toIso8601String()}'),
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay - 2)).toIso8601String()}'),
+    Graph_item(
+        count: 0,
+        date:
+            '${now.subtract(Duration(days: currentDay - 3)).toIso8601String()}'),
+  ];
+
+  List<Graph_item> get items {
+    return graph;
+  }
+
+  Future<void> fetchAndSetGraph(String id) async {
+    //final url = 'GET /_/urls/$id/graph';
+    final url = '$consturl/_/urls/$id/graph?filter=7 days';
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        "Accept": 'application/json; charset=UTF-8',
+        'Authorization': '${AuthService.instance.auth0AccessToken}',
+      },
+    );
+
+    final List<Graph_item> loadedgraph = [];
+
+    final extractedGraph = json.decode(response.body);
+    if (extractedGraph == null) {
+      return;
+    }
+    int i = 0;
+    for (var urlsData in extractedGraph) {
+      graph[i] = Graph_item(count: urlsData['count'], date: urlsData['on']);
+      i++;
+    }
   }
 }
