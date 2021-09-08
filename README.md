@@ -20,6 +20,11 @@ It is not just a simple server redirecting URLs, or a simple app creating URLs. 
 
 ![mobile app screenshot](https://cdn.hashnode.com/res/hashnode/image/upload/v1630481612941/c_Yj7IcaB.png?auto=compress,format&format=webp)
 
+
+### Running Server
+
+![server_image](https://user-images.githubusercontent.com/55396651/132455426-319bb8d7-16b2-4313-9dfd-4fd6884766ab.jpg)
+
   
 ## Tech Stack
 
